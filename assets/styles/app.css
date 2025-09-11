@@ -1,3 +1,157 @@
-body {
-    background-color: skyblue;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bs-body-bg: #f4f7f9;
+    --bs-body-color: #334155;
+    --bs-link-color: #0d6efd;
+    --chart: #1483C1;
 }
+
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Styles pour le mode Desktop (écran >= 992px) */
+@media (min-width: 992px) {
+    .sidebar {
+        position: fixed;
+        top: 56px;
+        bottom: 0;
+        left: 0;
+        width: 260px;
+        z-index: 1030;
+        /*box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);*/
+        transition: width 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sidebar.collapsed {
+        width: 70px;
+    }
+
+    .main-content {
+        margin-left: 260px;
+        transition: margin-left 0.4s ease;
+        padding-top: 2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .main-content.collapsed {
+        margin-left: 70px;
+    }
+
+    .sidebar .nav-link span,
+    .sidebar .btn span,
+    .sidebar .navbar-brand .text-muted {
+        display: inline-block;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed .nav-link span,
+    .sidebar.collapsed .btn span,
+    .sidebar.collapsed .navbar-brand .text-muted {
+        opacity: 0;
+        pointer-events: none;
+        width: 0;
+    }
+}
+
+/* Styles pour le mode Offcanvas (mobile/tablette < 992px) */
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+.navbar-brand img {
+    width: 125px;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link.active {
+    color: var(--bs-blue) !important;
+    background-color: var(--bs-blue-100);
+    border-left: 4px solid var(--bs-blue);
+    font-weight: 600;
+}
+
+.nav-link.active i {
+    color: var(--bs-blue) !important;
+}
+
+.notif-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+    top: -5px;
+    right: -8px;
+}
+
+.sidebar-toggle {
+    cursor: pointer;
+}
+
+ .offcanvas-body {
+     padding-bottom: 30px;
+ }
+
+.form-label {
+    font-weight: bold;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Ajustement de la largeur du offcanvas */
+.offcanvas.offcanvas-end {
+    width: 700px;
+    /* Largeur de base pour les grands écrans */
+}
+
+@media (max-width: 768px) {
+    .offcanvas.offcanvas-end {
+        width: 90%;
+        /* Ajustement pour les petits écrans */
+    }
+}
+
+/* Style pour les largeurs de colonnes */
+.col-article {
+    width: 50%;
+}
+
+.col-qty {
+    width: 15%;
+}
+
+.col-price {
+    width: 20%;
+}
+
+.col-total {
+    width: 15%;
+}
+
