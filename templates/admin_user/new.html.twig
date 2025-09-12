@@ -1,4 +1,81 @@
 {% extends 'base.html.twig' %}
 {% block extra_title %}Gestion des utilisateurs{% endblock %}
 {% block body %}
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- Header de la page -->
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
+                <h1 class="h3 fw-bold mb-0">Liste des utilisateurs</h1>
+                <!-- Bouton pour ouvrir l'offcanvas -->
+                <button id="createDevisBtn" class="btn btn-primary d-flex align-items-center fw-bold rounded-3"
+                        type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
+                        aria-controls="offcanvasDevis">
+                    <i class="bi bi-plus-circle-fill me-2"></i>
+                    Créer un nouvel utilisateur
+                </button>
+            </div>
+
+
+            <!-- Tableau des devis -->
+            <div class="card p-4 mt-5">
+                <div class="table-responsive mt-5">
+                    <table class="table table-hover table-sm align-middle mb-0" id="listeUser" style="font-size: .95rem;">
+                        <thead class="text-muted small text-uppercase text-center">
+                        <tr>
+                            <th class="text-center" scope="col">ID</th>
+                            <th class="text-center" scope="col">Nom & prénoms</th>
+                            <th class="text-center" scope="col">Services</th>
+                            <th class="text-center" scope="col">Username</th>
+                            <th class="text-center" scope="col">Connexions</th>
+                            <th class="text-center" scope="col">Dates</th>
+                            <th class="text-center" scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>{{ user.email }}</td>
+                                <td class="text-center">{{ user.connexion }}</td>
+                                <td class="text-center">{{ user.lastConnectedAt ? user.lastConnectedAt|date('Y-m-d H:i:s')  : '-' }}</td>
+                                <td class="text-center">
+                                    <div class="text-center d-flex gap-2">
+                                        <a href="#" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-pdf"></i></a>
+                                        <a href="#" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="#" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Offcanvas pour le formulaire de création -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDevis" aria-labelledby="offcanvasDevisLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDevisLabel">Créer un nouvel utilisateur</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Formulaire -->
+            {{ include('admin_user/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        /* Ajustement de la largeur du offcanvas */
+        /*.offcanvas.offcanvas-end {*/
+        /*    width: 700px;*/
+        /*    !* Largeur de base pour les grands écrans *!*/
+        /*}*/
+    </style>
 {% endblock %}

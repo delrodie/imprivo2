@@ -1,0 +1,33 @@
+{{ form_start(form, {
+    attr: {
+        'data-controller': 'form-submitter',
+        'data-action': 'turbo:submit-end->form-submitter#handleSubmit'
+    }
+}) }}
+<div class="form-group row g-3">
+    <div class="col-12 mt-3">{{ form_row(form.email) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.password) }}</div>
+    <div class="col-12 mt-3">
+        {% for role in form.roles %}
+            <div class="form-check">
+                {{ form_widget(role,{"attr":{"class":"form-check-input"}}) }}
+                {{ form_label(role) }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_widget(form) }}
+</div>
+
+<div class="row mt-5">
+    <div class="col-6 d-grid gap-2">
+        <button type="button" class="btn btn-outline-secondary" id="cancelBtn">
+            <i class="bi bi-x-lg me-2"></i>Annuler
+        </button>
+    </div>
+    <div class="col-6 d-grid gap-2">
+        <button type="submit" class="btn btn-primary" id="sendBtn">
+            <i class="bi bi-save me-2"></i>Enregistrer
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

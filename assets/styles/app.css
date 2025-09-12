@@ -125,12 +125,6 @@ body {
     overflow-x: auto;
 }
 
-/* Ajustement de la largeur du offcanvas */
-.offcanvas.offcanvas-end {
-    width: 700px;
-    /* Largeur de base pour les grands écrans */
-}
-
 @media (max-width: 768px) {
     .offcanvas.offcanvas-end {
         width: 90%;
@@ -154,4 +148,3 @@ body {
 .col-total {
     width: 15%;
 }
-
