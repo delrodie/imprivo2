@@ -11,6 +11,7 @@ document.getElementById('sidebar-toggle-desktop').addEventListener('click', func
     const mainContent = document.querySelector('.main-content');
     sidebar.classList.toggle('collapsed');
     mainContent.classList.toggle('collapsed');
+    console.log('sidebar')
 });
 
 import './styles/app.css';

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="d-flex align-items-center">
             <!-- Bouton de bascule pour Desktop (visible uniquement en desktop) -->
-            <button class="btn d-none d-lg-block" id="sidebar-toggle-desktop">
+            <button class="btn d-none d-lg-block" id="sidebar-toggle-desktop" data-action="click->sidebar#toggle">
                 <i class="bi bi-list fs-3 me-3 text-dark" role="button"></i>
             </button>
             <!-- Bouton de bascule Offcanvas pour Mobile/Tablet (visible uniquement en mobile/tablet) -->
@@ -18,15 +18,15 @@
         </div>
         <div class="d-flex align-items-center">
             <!-- Notifications Dropdown -->
-            <div class="dropdown me-4">
-                <a href="#" class="text-dark position-relative" id="notifDropdown" data-bs-toggle="dropdown"
+            <div class="dropdown me-4" data-controller="dropdown">
+                <a href="#" class="text-dark position-relative"  id="notifDropdown" data-bs-toggle="dropdown"
                    aria-expanded="false">
                     <i class="bi bi-bell fs-5"></i>
                     <span
                         class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle notif-badge">3</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3"
-                    aria-labelledby="notifDropdown">
+                    data-dropdown-target="menu">
                     <li>
                         <h6 class="dropdown-header">Notifications</h6>
                     </li>
@@ -43,8 +43,8 @@
                 </ul>
             </div>
             <!-- User Profile Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="text-dark" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown" data-controller="dropdown">
+                <a href="#" class="text-dark"  id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle fs-5"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3"
@@ -68,7 +68,7 @@
 </nav>
 
 <!-- Contenu du Sidebar pour Desktop -->
-<div class="sidebar d-none d-lg-flex flex-column h-100 p-3 bg-white">
+<div class="sidebar d-none d-lg-flex flex-column h-100 p-3 bg-white" data-sidebar-target="sidebar" data-type="desktop">
 
     <ul class="nav flex-column mb-auto mt-5">
         <li class="nav-item">
