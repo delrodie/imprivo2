@@ -4,9 +4,10 @@
     <div class="container-fluid">
         <div class="d-flex align-items-center">
             <!-- Bouton de bascule pour Desktop (visible uniquement en desktop) -->
-            <button class="btn d-none d-lg-block" id="sidebar-toggle-desktop" data-action="click->sidebar#toggle">
-                <i class="bi bi-list fs-3 me-3 text-dark" role="button"></i>
+            <button class="btn d-none d-lg-block" id="sidebar-toggle-desktop" aria-label="Basculer la sidebar">
+                <i class="bi bi-list fs-3 me-3 text-dark"></i>
             </button>
+
             <!-- Bouton de bascule Offcanvas pour Mobile/Tablet (visible uniquement en mobile/tablet) -->
             <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#sidebar-offcanvas" aria-controls="sidebar-offcanvas">
@@ -68,11 +69,11 @@
 </nav>
 
 <!-- Contenu du Sidebar pour Desktop -->
-<div class="sidebar d-none d-lg-flex flex-column h-100 p-3 bg-white" data-sidebar-target="sidebar" data-type="desktop">
+<div id="sidebar-desktop" class="sidebar d-none d-lg-flex flex-column h-100 p-3 bg-white" data-type="desktop">
 
     <ul class="nav flex-column mb-auto mt-5">
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1  {% if _route == 'app_home' %}active{% endif %}" href="{{ absolute_url(path('app_home')) }}">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1  {% if _route == 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">
                 <i class="bi bi-speedometer2 me-3"></i><span>Tableau de bord</span>
             </a>
         </li>
@@ -101,7 +102,7 @@
                     class="bi bi-gear-fill me-3"></i><span>Paramètres</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_admin_user_new' %}active{% endif %}" href="{{ path('app_admin_user_new') }}"><i
                     class="bi bi-lock-fill me-3"></i><span>Sécurités</span></a>
         </li>
     </ul>

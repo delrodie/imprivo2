@@ -6,13 +6,13 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 // Gestion du basculement de la barre latérale en mode desktop
-document.getElementById('sidebar-toggle-desktop').addEventListener('click', function () {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('collapsed');
-    mainContent.classList.toggle('collapsed');
-    console.log('sidebar')
-});
+// document.getElementById('sidebar-toggle-desktop').addEventListener('click', function () {
+//     const sidebar = document.querySelector('.sidebar');
+//     const mainContent = document.querySelector('.main-content');
+//     sidebar.classList.toggle('collapsed');
+//     mainContent.classList.toggle('collapsed');
+//     console.log('sidebar')
+// });
 
 import './styles/app.css';
 
