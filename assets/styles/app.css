@@ -172,3 +172,12 @@ body {
 .btn-sup:hover{
     color: red;
 }
+
+.form-group ul li{
+    color: red;
+    font-style: italic;
+}
+
+.form-control, .form-select{
+    color: var(--chart);
+}

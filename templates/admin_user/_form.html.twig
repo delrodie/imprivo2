@@ -2,6 +2,7 @@
     action: user.id
     ? path('app_admin_user_edit', { id: user.id })
     : path('app_admin_user_new'),
+    method: 'POST',
     attr: {
         'data-controller': 'form',
         'data-form-target': 'form',
@@ -14,17 +15,17 @@
     <div class="col-12 mt-3">
         {% for role in form.roles %}
             <div class="form-check">
-                {{ form_widget(role,{"attr":{"class":"form-check-input"}}) }}
+                {{ form_widget(role, { attr: { class: 'form-check-input' } }) }}
                 {{ form_label(role) }}
             </div>
         {% endfor %}
     </div>
-    {{ form_widget(form) }}
+    {{ form_rest(form) }}
 </div>
 
 <div class="row mt-5">
     <div class="col-6 d-grid gap-2">
-        <a href="#" class="btn btn-outline-secondary" id="cancelBtn">
+        <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
             <i class="bi bi-x-lg me-2"></i>Annuler
         </a>
     </div>
