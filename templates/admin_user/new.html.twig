@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
                 <h1 class="h3 fw-bold mb-0">Liste des utilisateurs</h1>
                 <!-- Bouton pour ouvrir l'offcanvas -->
-                <button id="createDevisBtn" class="btn btn-primary d-flex align-items-center fw-bold rounded-3"
+                <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
                         type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
                         aria-controls="offcanvasDevis">
                     <i class="bi bi-plus-circle-fill me-2"></i>
@@ -19,8 +19,8 @@
             <!-- Tableau des devis -->
             <div class="card p-4 mt-5">
                 <div class="table-responsive mt-5">
-                    <table class="table table-hover table-sm align-middle mb-0" id="listeUser" style="font-size: .95rem;">
-                        <thead class="text-muted small text-uppercase text-center">
+                    <table class="table table-hover table-sm align-middle mb-0" id="userList" style="font-size: .95rem;">
+                        <thead class="text-muted small text-uppercase text-center mt-5">
                         <tr>
                             <th class="text-center" scope="col">ID</th>
                             <th class="text-center" scope="col">Nom & prénoms</th>
@@ -31,26 +31,7 @@
                             <th class="text-center" scope="col">Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {% for user in users %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>{{ user.email }}</td>
-                                <td class="text-center">{{ user.connexion }}</td>
-                                <td class="text-center">{{ user.lastConnectedAt ? user.lastConnectedAt|date('Y-m-d H:i:s')  : '-' }}</td>
-                                <td class="text-center">
-                                    <div class="text-center d-flex gap-2">
-                                        <a href="#" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-pdf"></i></a>
-                                        <a href="#" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="#" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -70,12 +51,71 @@
     </div>
 {% endblock %}
 
-{% block style %}
+{% block extra_stylesheets %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
     <style>
+
         /* Ajustement de la largeur du offcanvas */
         /*.offcanvas.offcanvas-end {*/
         /*    width: 700px;*/
         /*    !* Largeur de base pour les grands écrans *!*/
         /*}*/
     </style>
+{% endblock %}
+{% block extra_javascripts %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+    <!-- JS DataTables + Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- JS Buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+    <script>
+        new DataTable('#userList', {
+            ajax: "{{ path('api_user_list') }}",
+            columns: [
+                { data: 'id' },
+                { data: 'nom'},
+                { data: 'services'},
+                { data: 'username'},
+                { data: 'connexion', className: 'text-center'},
+                { data: 'lastConnectedAt', className: 'text-center'},
+                {
+                    data: 'actions',
+                    render: function (data, type, row){
+                        return `
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="${data.detail}" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-pdf"></i></a>
+                            <a href="${data.edit}" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>
+                            <a href="${data.delete}" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>
+                        </div>
+                        `;
+                    }
+                }
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copier', className: 'btn btn-secondary btn-sm' },
+                { extend: 'excelHtml5', text: '<i class="bi bi-file-earmark-excel"></i> Excel', className: 'btn btn-secondary btn-sm' },
+                { extend: 'csvHtml5', text: '<i class="bi bi-filetype-csv"></i> CSV', className: 'btn btn-secondary btn-sm' },
+                // { extend: 'pdfHtml5', text: '<i class="bi bi-file-earmark-pdf"></i> PDF', className: 'btn btn-danger btn-sm' },
+                { extend: 'print', text: '<i class="bi bi-printer"></i> Imprimer', className: 'btn btn-secondary btn-sm' },
+                { extend: 'colvis', text: '<i class="bi bi-eye"></i> Colonnes', className: 'btn btn-dark btn-sm' }
+            ],
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/fr-FR.json"
+            }
+        });
+    </script>
 {% endblock %}

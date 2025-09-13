@@ -148,3 +148,27 @@ body {
 .col-total {
     width: 15%;
 }
+
+.dt-buttons{
+    margin-bottom: 10px;
+}
+.dataTables_filter{
+    margin-bottom: 50px;
+}
+.dataTables_info{
+    margin-top: 30px;
+}
+
+.btn-chart{
+    background: var(--chart);
+    color: white;
+}
+.btn-pdf, .btn-modif, .btn-sup{
+    color: var(--chart);
+}
+.btn-pdf:hover, .btn-modif:hover{
+    color: black;
+}
+.btn-sup:hover{
+    color: red;
+}

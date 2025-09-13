@@ -42,4 +42,22 @@ class AdminUserController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route('/{id}', name:"app_admin_user_show", methods: ['GET'])]
+    public function details()
+    {
+
+    }
+
+    #[Route('/{id/edit', name:"app_admin_user_edit", methods: ['GET', 'POST'])]
+    public function edit()
+    {
+
+    }
+
+    #[Route('/delete', name: "app_admin_user_delete", methods: ['POST'])]
+    public function delete()
+    {
+
+    }
 }
