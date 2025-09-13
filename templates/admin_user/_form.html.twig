@@ -1,7 +1,11 @@
 {{ form_start(form, {
+    action: user.id
+    ? path('app_admin_user_edit', { id: user.id })
+    : path('app_admin_user_new'),
     attr: {
-        'data-controller': 'form-submitter',
-        'data-action': 'turbo:submit-end->form-submitter#handleSubmit'
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
     }
 }) }}
 <div class="form-group row g-3">
@@ -20,9 +24,9 @@
 
 <div class="row mt-5">
     <div class="col-6 d-grid gap-2">
-        <button type="button" class="btn btn-outline-secondary" id="cancelBtn">
+        <a href="#" class="btn btn-outline-secondary" id="cancelBtn">
             <i class="bi bi-x-lg me-2"></i>Annuler
-        </button>
+        </a>
     </div>
     <div class="col-6 d-grid gap-2">
         <button type="submit" class="btn btn-chart" id="sendBtn">
