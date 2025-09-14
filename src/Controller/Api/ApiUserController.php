@@ -21,10 +21,14 @@ class ApiUserController extends AbstractController
 
         $data=[];
         foreach ($users as $index => $user) {
+            $nom = $user->getEmploye()?$user->getEmploye()->getNom() : '-';
+            $prenom = $user->getEmploye()?$user->getEmploye()->getPrenom() : '-';
+            $fonction = $user->getEmploye()?$user->getEmploye()->getFonction() : '-';
+
             $data[] = [
                 'id' => $index +1,
-                'nom' => '-',
-                'services' => '-',
+                'nom' => strtoupper($nom).' '.strtoupper($prenom),
+                'services' => $fonction,
                 'username' => $user->getUserIdentifier(),
                 'connexion' => $user->getConnexion(),
                 'lastConnectedAt' => $user->getLastConnectedAt() ? $user->getLastConnectedAt()->format('Y-m-d H:i:s') : '-',

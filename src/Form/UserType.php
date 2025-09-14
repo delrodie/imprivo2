@@ -43,12 +43,11 @@ class UserType extends AbstractType
             ])
             ->add('password', PasswordType::class,[
                 'attr' => ['class' => 'form-control form-control-sm'],
-                'label' => "Mot de passe <span>*</span>",
-                'constraints' => [
-                    new Assert\NotBlank(['message' => "Le mot de passe ne peut être vide."])
-                ],
+                'label' => "Mot de passe",
                 'label_attr' => ['class' => 'form-label'],
-                'label_html' => true
+                'label_html' => true,
+                'mapped' => false, // ✅ ne remplace pas directement l’entité User
+                'required' => true
             ])
 //            ->add('connexion')
 //            ->add('lastConnectedAt', null, [

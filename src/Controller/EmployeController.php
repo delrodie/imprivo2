@@ -90,9 +90,9 @@ class EmployeController extends AbstractController
             }
 
             if ($isNew){
-//                $employe->setCode(time().'Y');
                 $this->entityManager->persist($employe);
             }
+
             $this->entityManager->flush();
 
             return new JsonResponse(['success' => true]);

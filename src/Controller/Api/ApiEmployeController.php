@@ -23,7 +23,7 @@ class ApiEmployeController extends AbstractController
             $data[] = [
                 'id' => $index + 1,
                 'code' => $employe->getCode(),
-                'identite' => $employe->getNom().' '.$employe->getPrenom(),
+                'identite' => strtoupper($employe->getNom()).' '.strtoupper($employe->getPrenom()),
                 'fonction' => $employe->getFonction(),
                 'telephone' => $employe->getTelephone(),
                 'user' => $employe->getUser()->getEmail(),

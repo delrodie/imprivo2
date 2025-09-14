@@ -64,7 +64,7 @@ class EmployeType extends AbstractType
 //            ])
             ->add('user', UserType::class,[
                 'label' => false,
-                'by_reference' => false
+                'by_reference' => true
             ])
         ;
     }

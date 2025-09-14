@@ -6,6 +6,7 @@ use App\Repository\EmployeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
+//#[ORM\EntityListeners(['App\EventListener\EmployeListener'])]
 #[ORM\HasLifecycleCallbacks()]
 class Employe
 {
