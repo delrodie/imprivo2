@@ -180,4 +180,5 @@ body {
 
 .form-control, .form-select{
     color: var(--chart);
+    font-weight: 500;
 }
