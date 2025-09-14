@@ -102,6 +102,10 @@
                     class="bi bi-gear-fill me-3"></i><span>Paramètres</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_employe_index' %}active{% endif %}" href="{{ path('app_employe_index') }}"><i
+                    class="bi bi-people-fill me-3"></i><span>Employés</span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_admin_user_index' %}active{% endif %}" href="{{ path('app_admin_user_index') }}"><i
                     class="bi bi-lock-fill me-3"></i><span>Sécurités</span></a>
         </li>

@@ -6,6 +6,7 @@ use App\Repository\EmployeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 class Employe
 {
     #[ORM\Id]
@@ -166,5 +167,17 @@ class Employe
         $this->user = $user;
 
         return $this;
+    }
+
+    #[ORM\PrePersist()]
+    public function setCreatedAtValue(): \DateTimeImmutable
+    {
+        return $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate()]
+    public function setUpdatedAtValue(): \DateTimeImmutable
+    {
+        return $this->updatedAt = new \DateTimeImmutable();
     }
 }

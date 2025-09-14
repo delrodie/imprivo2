@@ -1,0 +1,42 @@
+{{ form_start(form, {
+    action: employe.id
+    ? path('app_employe_edit', { id: employe.id })
+    : path('app_employe_new'),
+    method: 'POST',
+    attr: {
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
+    }
+}) }}
+<div class="form-group row g-3">
+    <div class="col-12 mt-3">{{ form_row(form.nom) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.prenom) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.fonction) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.telephone) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.user.email) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.user.password) }}</div>
+    <div class="col-12 mt-3">
+        {% for role in form.user.roles %}
+            <div class="form-check">
+                {{ form_widget(role, { attr: { class: 'form-check-input' } }) }}
+                {{ form_label(role) }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_rest(form) }}
+</div>
+
+<div class="row mt-5">
+    <div class="col-6 d-grid gap-2">
+        <a href="{{ path('api_employe_index') }}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-2"></i>Annuler
+        </a>
+    </div>
+    <div class="col-6 d-grid gap-2">
+        <button type="submit" class="btn btn-chart" id="sendBtn">
+            <i class="bi bi-save me-2"></i>Enregistrer
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

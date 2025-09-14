@@ -18,12 +18,13 @@ class UserType extends AbstractType
         $builder
             ->add('email', TextType::class,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete'=>'off'],
-                'label' => "Adresse email",
+                'label' => "Adresse email  <span>*</span>",
                 'constraints' => [
                     new Assert\NotBlank(['message' => "L'adresse email est obligatoire"]),
                     new Assert\Email(['message' => 'L\'adresse {{ value }} n\'est pas une adresse valide. '])
                 ],
-                'label_attr' => ['class' => 'form-label']
+                'label_attr' => ['class' => 'form-label'],
+                'label_html' => true
 
             ])
             ->add('roles', ChoiceType::class,[
@@ -42,11 +43,12 @@ class UserType extends AbstractType
             ])
             ->add('password', PasswordType::class,[
                 'attr' => ['class' => 'form-control form-control-sm'],
-                'label' => "Mot de passe",
+                'label' => "Mot de passe <span>*</span>",
                 'constraints' => [
                     new Assert\NotBlank(['message' => "Le mot de passe ne peut être vide."])
                 ],
-                'label_attr' => ['class' => 'form-label']
+                'label_attr' => ['class' => 'form-label'],
+                'label_html' => true
             ])
 //            ->add('connexion')
 //            ->add('lastConnectedAt', null, [
