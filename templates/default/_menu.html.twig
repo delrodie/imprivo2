@@ -90,7 +90,7 @@
                     class="bi bi-cash me-3"></i><span>Titre de recettes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_client_index' %}active{% endif %}" href="{{ path('app_client_index') }}"><i
                     class="bi bi-person-badge-fill me-3"></i><span>Clients</span></a>
         </li>
         <li class="nav-item">

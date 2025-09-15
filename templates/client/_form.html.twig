@@ -1,0 +1,41 @@
+{{ form_start(form, {
+    action: client.id
+    ? path('app_client_edit', { id: client.id })
+    : path('app_client_new'),
+    method: 'POST',
+    attr: {
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
+    }
+}) }}
+<div class="form-group row g-3 mt-3">
+    <div class="col-6 mt-3">{{ form_row(form.type) }}</div>
+    <div class="col-6 mt-3">{{ form_row(form.nom) }}</div>
+    <div class="col-6 mt-3">{{ form_row(form.rc) }}</div>
+    <div class="col-6 mt-3">{{ form_row(form.ville) }}</div>
+    <div class="col-6 mt-3">{{ form_row(form.telephone) }}</div>
+    <div class="col-6 mt-3">{{ form_row(form.email) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.adresse) }}</div>
+    <div class="col-12 mt-3">
+        <div class="form-check">
+            {{ form_widget(form.actif, { attr: { class: 'form-check-input' } }) }}
+            {{ form_label(form.actif) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</div>
+
+<div class="row mt-5">
+    <div class="col-6 d-grid gap-2">
+        <a href="{{ absolute_url(path('api_client_index') )}}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-2"></i>Annuler
+        </a>
+    </div>
+    <div class="col-6 d-grid gap-2">
+        <button type="submit" class="btn btn-chart" id="sendBtn">
+            <i class="bi bi-save me-2"></i>Enregistrer
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}
