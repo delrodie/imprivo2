@@ -28,7 +28,7 @@ class ApiEmployeController extends AbstractController
                 'telephone' => $employe->getTelephone(),
                 'user' => $employe->getUser()->getEmail(),
                 'actions' => [
-                    'detail' => $this->generateUrl('app_employe_show',['id' => $employe->getId()]),
+                    'detail' => $this->generateUrl('admin_user_permissions',['id' => $employe->getId()]),
                     'edit' => $this->generateUrl('app_employe_edit',['id' => $employe->getId()]),
                     'delete' => $this->generateUrl('app_employe_delete',['id' => $employe->getId()]),
                 ]

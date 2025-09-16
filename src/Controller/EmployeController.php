@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\Entity\Employe;
 use App\Form\EmployeType;
 use App\Repository\EmployeRepository;
+use App\Repository\PermissionRepository;
+use App\Repository\UserPermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,6 +24,8 @@ class EmployeController extends AbstractController
         private EntityManagerInterface $entityManager,
         private EmployeRepository $employeRepository,
         private UserPasswordHasherInterface $passwordHasher,
+        private PermissionRepository $permissionRepository,
+        private UserPermissionRepository $userPermissionRepository
     )
     {
     }
@@ -49,7 +53,11 @@ class EmployeController extends AbstractController
     #[Route('/{id}', name:'app_employe_show', methods:['GET'])]
     public function show(Employe $employe)
     {
-
+        return $this->render('employe/show.html.twig',[
+            'employe' => $employe,
+            'permissions' => $this->permissionRepository->findAll(),
+            'userPermissionIds' => $this->userPermissionRepository->findAll()
+        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_employe_edit', methods: ['GET', 'POST'])]
@@ -59,7 +67,7 @@ class EmployeController extends AbstractController
     }
 
     #[Route('/{id}', name:'app_employe_delete', methods:['DELETE'])]
-    public function delete(Employe $employe)
+    public function delete(Employe $employe): Response
     {
         $this->entityManager->remove($employe);
         $this->entityManager->flush();
@@ -68,7 +76,7 @@ class EmployeController extends AbstractController
         return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
-    private function handleForm(Request $request, Employe $employe, bool $isNew)
+    private function handleForm(Request $request, Employe $employe, bool $isNew): JsonResponse|Response
     {
         $form = $this->createForm(EmployeType::class, $employe);
         $form->handleRequest($request);
