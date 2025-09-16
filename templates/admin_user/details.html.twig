@@ -1,0 +1,17 @@
+<h3>Permissions de {{ user.email }}</h3>
+<form
+    data-controller="permissions"
+    data-turbo-frame="permissions_frame"
+    action="{{ path('app_admin_user_new', {id: user.id}) }}"
+    method="post">
+
+    {% for permission in permissions %}
+        <label>
+            <input type="checkbox" name="permissions[]" value="{{ permission.id }}"
+                   {% if permission.id in userPermissionIds %}checked{% endif %}>
+            {{ permission.label }}
+        </label><br>
+    {% endfor %}
+
+    <button type="submit">Mettre à jour</button>
+</form>

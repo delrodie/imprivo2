@@ -1,0 +1,30 @@
+{{ form_start(form, {
+    action: permission.id
+    ? path('app_admin_permission_edit', { id: permission.id })
+    : path('app_admin_permission_new'),
+    method: 'POST',
+    attr: {
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
+    }
+}) }}
+<div class="form-group row g-3">
+    <div class="col-12 mt-3">{{ form_row(form.code) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.label) }}</div>
+    {{ form_rest(form) }}
+</div>
+
+<div class="row mt-5">
+    <div class="col-6 d-grid gap-2">
+        <a href="{{ absolute_url(path('app_admin_permission_index') )}}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-2"></i>Annuler
+        </a>
+    </div>
+    <div class="col-6 d-grid gap-2">
+        <button type="submit" class="btn btn-chart" id="sendBtn">
+            <i class="bi bi-save me-2"></i>Enregistrer
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

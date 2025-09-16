@@ -97,6 +97,8 @@
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
                     class="bi bi-wallet2 me-3"></i><span>Recouvrement</span></a>
         </li>
+
+        {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item border-top mt-5">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
                     class="bi bi-gear-fill me-3"></i><span>Paramètres</span></a>
@@ -106,9 +108,21 @@
                     class="bi bi-people-fill me-3"></i><span>Employés</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_employe_index' %}active{% endif %}" href="{{ path('app_employe_index') }}"><i
+                    class="bi bi-person-check me-3"></i><span>Autorisation</span></a>
+        </li>
+        {% endif %}
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_admin_user_index' %}active{% endif %}" href="{{ path('app_admin_user_index') }}"><i
                     class="bi bi-lock-fill me-3"></i><span>Sécurités</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_admin_permission_index' %}active{% endif %}" href="{{ path('app_admin_permission_index') }}"><i
+                    class="bi bi-shield-lock me-3"></i><span>Config sécurité</span></a>
+        </li>
+        {% endif %}
     </ul>
     <div class="border-top pt-2 text-center text-muted">
         <small> &COPY; 2025 IMPRIVO</small>

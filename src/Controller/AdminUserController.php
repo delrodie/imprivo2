@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +21,7 @@ class AdminUserController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
+        private PermissionRepository $permissionRepository
     )
     {
     }
@@ -45,9 +47,12 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}', name:"app_admin_user_show", methods: ['GET'])]
-    public function details()
+    public function details(User $user)
     {
-
+        return $this->render('admin_user/details.html.twig',[
+            'user' => $user,
+            'permissions' => $this->permissionRepository->findAll()
+        ]);
     }
 
     #[Route('/{id}/edit', name:"app_admin_user_edit", methods: ['GET','POST'])]
@@ -84,6 +89,10 @@ class AdminUserController extends AbstractController
                 $user->setPassword(
                     $this->passwordHasher->hashPassword($user, $user->getPassword())
                 );
+            }
+            $plainPassword = $form->get('password')->getData();
+            if ($plainPassword){
+                $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
             }
             if ($isNew) {
                 $this->entityManager->persist($user);

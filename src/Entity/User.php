@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Employe $employe = null;
+
+    /**
+     * @var Collection<int, UserPermission>
+     */
+    #[ORM\OneToMany(targetEntity: UserPermission::class, mappedBy: 'user')]
+    private Collection $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,5 +179,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->employe = $employe;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, UserPermission>
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(UserPermission $permission): static
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions->add($permission);
+            $permission->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(UserPermission $permission): static
+    {
+        if ($this->permissions->removeElement($permission)) {
+            // set the owning side to null (unless already changed)
+            if ($permission->getUser() === $this) {
+                $permission->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasPermission(string $code): bool
+    {
+        foreach($this->permissions as $userPermission) {
+            if($userPermission -> getPermission()->getCode() === $code) {
+                return true;
+            }
+        }
+        return false;
     }
 }
