@@ -10,7 +10,7 @@
 
             <div class="card p-4 mt-5">
                 <div class="card-body mt-5">
-                    <h5 class="mb-5">Les autorisations de(d') {{ employe.nom }} {{ employe.prenom }}</h5>
+                    <h5 class="mb-5">Les autorisations de {{ employe.nom }} {{ employe.prenom }}</h5>
 
                     <table class="table table-hover align-middle text-center"
                            data-controller="permissions">
@@ -27,35 +27,33 @@
 
                         <tbody>
                         {% for module, actions in permissionsGrouped %}
-                            {% for module, actions in permissionsGrouped %}
-                                <tr>
-                                    <td>{{ module }}</td>
+                            <tr>
+                                <td class="text-start" style="color: var(--chart)">{{ module }}</td>
 
-                                    <!-- Case “Tout” -->
+                                <!-- Case “Tout” -->
+                                <td>
+                                    <input type="checkbox"
+                                           class="form-check-input module-toggle"
+                                           data-action="change->permissions#toggleModule"
+                                           data-module="{{ module }}">
+                                </td>
+
+                                {% for action in ['create','read','update','delete'] %}
+                                    {% set perm = actions[action] ?? null %}
                                     <td>
                                         <input type="checkbox"
-                                               class="form-check-input module-toggle"
-                                               data-action="change->permissions#toggleModule"
-                                               data-module="{{ module }}">
+                                               class="form-check-input"
+                                               data-action="change->permissions#toggle"
+                                               data-permission-module="{{ module }}"
+                                               data-permission-action="{{ action }}"
+                                               value="{{ perm ? perm.id : '' }}"
+                                               {% if perm and perm.id in userPermissionIds %}checked{% endif %}>
                                     </td>
-
-                                    {% for action in ['create','read','update','delete'] %}
-                                        {% set perm = actions[action] ?? null %}
-                                        <td>
-                                            <input type="checkbox"
-                                                   class="form-check-input"
-                                                   data-action="change->permissions#toggle"
-                                                   data-permission-module="{{ module }}"
-                                                   data-permission-action="{{ action }}"
-                                                   value="{{ perm ? perm.id : '' }}"
-                                                   {% if perm and perm.id in userPermissionIds %}checked{% endif %}>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-
+                                {% endfor %}
+                            </tr>
                         {% endfor %}
                         </tbody>
+
 
 
                     </table>
