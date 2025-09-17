@@ -61,6 +61,20 @@ export default class extends Controller {
         }
     }
 
+    toggleModule(event) {
+        const checkbox = event.target
+        const module = checkbox.dataset.module
+        const checkboxes = this.element.querySelectorAll(`input[data-permission-module="${module}"]`)
+
+        checkboxes.forEach(cb => {
+            // Ne pas déclencher toggle si déjà dans le bon état
+            if (cb.checked !== checkbox.checked) {
+                cb.checked = checkbox.checked
+                cb.dispatchEvent(new Event('change', { bubbles: true })) // déclenche la sauvegarde
+            }
+        })
+    }
+
     showToast(message, type = "info", icon = "info") {
         const container = document.getElementById("toast-container")
         const toast = document.createElement("div")

@@ -108,8 +108,13 @@
                     class="bi bi-people-fill me-3"></i><span>Employés</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_employe_index' %}active{% endif %}" href="{{ path('app_employe_index') }}"><i
-                    class="bi bi-person-check me-3"></i><span>Autorisation</span></a>
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1
+                {% if _route == 'admin_user_permissions' %}active{% endif %}
+                {% if _route == 'admin_user_permissions_toggle' %}active{% endif %}
+                "
+               href="{{ path('app_employe_index') }}"
+            >
+                <i class="bi bi-person-check me-3"></i><span>Autorisation</span></a>
         </li>
         {% endif %}
 
