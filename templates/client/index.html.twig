@@ -7,12 +7,15 @@
             <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
                 <h1 class="h3 fw-bold mb-0">Liste des clients</h1>
                 <!-- Bouton pour ouvrir l'offcanvas -->
-                <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
-                        type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
-                        aria-controls="offcanvasDevis">
-                    <i class="bi bi-plus-circle-fill me-2"></i>
-                    Créer un nouveau client
-                </button>
+                {% if is_granted('client.create') %}
+                    <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
+                            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
+                            aria-controls="offcanvasDevis">
+                        <i class="bi bi-plus-circle-fill me-2"></i>
+                        Créer un nouveau client
+                    </button>
+                {% endif %}
+
             </div>
 
 
@@ -85,7 +88,13 @@
 
     <script>
         new DataTable('#tabList', {
-            ajax: "{{ path('api_client_index') }}",
+            ajax: {
+                url: "{{ path('api_client_index') }}",
+                dataSrc: function(json) {
+                    userPermissions = json.permissions; // stocker les permissions côté JS
+                    return json.data;
+                }
+            },
             columns: [
                 { data: 'id' },
                 { data: 'code'},
@@ -99,16 +108,12 @@
                     data: 'actions',
                     render: function (data, type, row){
                         return `
-                        <div class="d-flex gap-2 justify-content-center"
-                            data-controller="user-actions"
-                            data-user-actions-edit-url-value="${data.edit}"
-                            data-user-actions-delete-url-value="${data.delete}"
-                        >
-                            <a href="${data.detail}" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-pdf"></i></a>
-                            <a href="#" data-action="click->user-actions#edit" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>
-                            <a href="#" data-action="click->user-actions#delete" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>
-                        </div>
-                        `;
+                <div class="d-flex gap-2 justify-content-center" data-controller="user-actions">
+                    ${ data.detail && userPermissions.read ? `<a href="${data.detail}" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-text"></i></a>` : '' }
+                    ${ data.edit && userPermissions.update ? `<a href="#" data-action="click->user-actions#edit" data-user-actions-edit-url-value="${data.edit}" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>` : '' }
+                    ${ data.delete && userPermissions.delete ? `<a href="#" data-action="click->user-actions#delete" data-user-actions-delete-url-value="${data.delete}" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>` : '' }
+                </div>
+                `;
                     }
                 }
             ],

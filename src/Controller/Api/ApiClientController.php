@@ -18,6 +18,12 @@ class ApiClientController extends AbstractController
     {
         $clients = $clientRepository->findAll();
         $data=[];
+
+        $canCreate = $this->isGranted('client.create');
+        $canRead = $this->isGranted('client.read');
+        $canUpdate = $this->isGranted('client.update');
+        $canDelete = $this->isGranted('client.delete');
+
         foreach ($clients as $index => $client) {
             $data[]=[
                 'id' => $index +1,
@@ -29,12 +35,20 @@ class ApiClientController extends AbstractController
                 'type' => $client->getType(),
                 'actif' => $client->isActif() ? 'ACTIF' : 'DESACTIVE',
                 'actions' => [
-                    'detail' => $this->generateUrl('app_client_show',['id' => $client->getId()]),
-                    'edit' => $this->generateUrl('app_client_edit',['id' => $client->getId()]),
-                    'delete' => $this->generateUrl('app_client_delete',['id' => $client->getId()]),
+                    'detail' => $canRead ? $this->generateUrl('app_client_show',['id' => $client->getId()]): null,
+                    'edit' => $canUpdate ? $this->generateUrl('app_client_edit',['id' => $client->getId()]): null,
+                    'delete' => $canDelete ? $this->generateUrl('app_client_delete',['id' => $client->getId()]) : null ,
                 ]
             ];
         }
-        return new JsonResponse(['data' => $data]);
+        return new JsonResponse([
+            'data' => $data,
+            'permissions' => [
+                'create' => $canCreate,
+                'read' => $canRead,
+                'update' => $canUpdate,
+                'delete' => $canDelete
+            ]
+        ]);
     }
 }
