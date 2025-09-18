@@ -47,7 +47,10 @@ class UserType extends AbstractType
                 'label_attr' => ['class' => 'form-label'],
                 'label_html' => true,
                 'mapped' => false, // ✅ ne remplace pas directement l’entité User
-                'required' => true
+                'required' => true,
+                'toggle' => true,
+                'visible_label' => 'Voir',
+                'hidden_label' => 'Masquer'
             ])
 //            ->add('connexion')
 //            ->add('lastConnectedAt', null, [

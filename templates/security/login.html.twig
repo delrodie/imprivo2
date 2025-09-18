@@ -23,8 +23,17 @@
             <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" placeholder="Adresse email" required autofocus>
         </div>
 
-        <div class="mb-3">
-            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" placeholder="Mot de passe" required>
+        <div class="mb-3 position-relative" >
+            <input type="password"
+                   name="_password"
+                   id="password"
+                   class="form-control pe-5"
+                   autocomplete="current-password"
+                   placeholder="Mot de passe" required
+            >
+            <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3"
+               id="togglePassword"
+               style="cursor: pointer;"></i>
         </div>
 
         <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
@@ -37,6 +46,8 @@
                 <input type="checkbox" name="_remember_me" id="_remember_me">
                 <label for="_remember_me">Remember me</label>
             </div>
+
+    <div class="col-12 mt-3"><div><label class="form-label required" for="employe_user_password">Mot de passe</label><div class="toggle-password-container"><input type="password" id="employe_user_password" name="employe[user][password]" required="required" class="form-control form-control-sm"/></div></div></div>
         #}
         <div class="d-flex justify-content-between align-items-center mb-5">
             <div class="form-check">
