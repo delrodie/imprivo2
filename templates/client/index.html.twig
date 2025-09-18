@@ -108,10 +108,14 @@
                     data: 'actions',
                     render: function (data, type, row){
                         return `
-                <div class="d-flex gap-2 justify-content-center" data-controller="user-actions">
+                <div class="d-flex gap-2 justify-content-center"
+                     data-controller="user-actions"
+                     data-user-actions-edit-url-value="${data.edit}"
+                     data-user-actions-delete-url-value="${data.delete}" class="bouton btn-sup"
+                >
                     ${ data.detail && userPermissions.read ? `<a href="${data.detail}" class="bouton btn-pdf" title="Détails"><i class="bi bi-file-earmark-text"></i></a>` : '' }
-                    ${ data.edit && userPermissions.update ? `<a href="#" data-action="click->user-actions#edit" data-user-actions-edit-url-value="${data.edit}" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>` : '' }
-                    ${ data.delete && userPermissions.delete ? `<a href="#" data-action="click->user-actions#delete" data-user-actions-delete-url-value="${data.delete}" class="bouton btn-sup" title="Supprimer"><i class="bi bi-trash"></i></a>` : '' }
+                    ${ data.edit && userPermissions.update ? `<a href="#" data-action="click->user-actions#edit" class="bouton btn-modif" title="Modifier"><i class="bi bi-pencil-square"></i></a>` : '' }
+                    ${ data.delete && userPermissions.delete ? `<a href="#" data-action="click->user-actions#delete" title="Supprimer"><i class="bi bi-trash"></i></a>` : '' }
                 </div>
                 `;
                     }
