@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block extra_title %}Gestion des clients{% endblock %}
+{% block extra_title %}Gestion des represenants de clients{% endblock %}
 {% block body %}
     <main class="main-content">
         <div class="container-fluid">
             <!-- Header de la page -->
             <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
-                <h1 class="h3 fw-bold mb-0">Liste des clients</h1>
+                <h1 class="h3 fw-bold mb-0">Liste des représentants de clients</h1>
                 <!-- Bouton pour ouvrir l'offcanvas -->
                 {% if is_granted('client.create') %}
                     <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
                             type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
                             aria-controls="offcanvasDevis">
                         <i class="bi bi-plus-circle-fill me-2"></i>
-                        Créer un nouveau client
+                        Créer un nouveau représentant
                     </button>
                 {% endif %}
 
@@ -26,13 +26,11 @@
                         <thead class="text-muted small text-uppercase text-center mt-5">
                         <tr>
                             <th class="text-center" scope="col">ID</th>
-                            <th class="text-center" scope="col">CODE</th>
+                            <th class="text-center" scope="col">CLient</th>
                             <th class="text-center" scope="col">Nom</th>
+                            <th class="text-center" scope="col">Fonction</th>
                             <th class="text-center" scope="col">TELEPHONE</th>
                             <th class="text-center" scope="col">EMAIL</th>
-                            <th class="text-center" scope="col">VILLE</th>
-                            <th class="text-center" scope="col">TYPE</th>
-                            <th class="text-center" scope="col">STATUT</th>
                             <th class="text-center" scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -46,12 +44,12 @@
     <!-- Offcanvas pour le formulaire de création -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDevis" aria-labelledby="offcanvasDevisLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDevisLabel">Créer un nouveau client</h5>
+            <h5 class="offcanvas-title" id="offcanvasDevisLabel">Créer un nouveau représentant</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <!-- Formulaire -->
-            {{ include('client/_form.html.twig') }}
+            {{ include('client/_form_representant.html.twig') }}
         </div>
     </div>
 {% endblock %}
@@ -89,7 +87,7 @@
     <script>
         new DataTable('#tabList', {
             ajax: {
-                url: "{{ path('api_client_index') }}",
+                url: "{{ path('api_representant_index') }}",
                 dataSrc: function(json) {
                     userPermissions = json.permissions; // stocker les permissions côté JS
                     return json.data;
@@ -97,13 +95,11 @@
             },
             columns: [
                 { data: 'id' },
-                { data: 'code'},
+                { data: 'client'},
                 { data: 'nom'},
+                { data: 'fonction'},
                 { data: 'telephone', className: 'text-center'},
                 { data: 'email'},
-                { data: 'ville'},
-                { data: 'type'},
-                { data: 'actif', className: 'text-center'},
                 {
                     data: 'actions',
                     render: function (data, type, row){

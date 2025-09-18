@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\ClientType;
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,6 +55,17 @@ class Client
 
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $updatedBy = null;
+
+    /**
+     * @var Collection<int, Representant>
+     */
+    #[ORM\OneToMany(targetEntity: Representant::class, mappedBy: 'client')]
+    private Collection $representants;
+
+    public function __construct()
+    {
+        $this->representants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -211,6 +224,36 @@ class Client
     public function setUpdatedBy(?string $updatedBy): static
     {
         $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Representant>
+     */
+    public function getRepresentants(): Collection
+    {
+        return $this->representants;
+    }
+
+    public function addRepresentant(Representant $representant): static
+    {
+        if (!$this->representants->contains($representant)) {
+            $this->representants->add($representant);
+            $representant->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRepresentant(Representant $representant): static
+    {
+        if ($this->representants->removeElement($representant)) {
+            // set the owning side to null (unless already changed)
+            if ($representant->getClient() === $this) {
+                $representant->setClient(null);
+            }
+        }
 
         return $this;
     }
