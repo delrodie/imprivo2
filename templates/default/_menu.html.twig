@@ -78,40 +78,96 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
-                    class="bi bi-receipt-cutoff me-3"></i><span>Facture</span></a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="devis.html"><i
                     class="bi bi-file-earmark-text me-3"></i><span>Dévis</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
-                    class="bi bi-cash me-3"></i><span>Titre de recettes</span></a>
+                    class="bi bi-receipt-cutoff me-3"></i><span>Facture</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_client_index' %}active{% endif %}" href="{{ path('app_client_index') }}"><i
-                    class="bi bi-person-badge-fill me-3"></i><span>Clients</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_representant_index' %}active{% endif %}" href="{{ path('app_representant_index') }}"><i
-                    class="bi bi-person-standing me-3"></i><span>Représentants</span></a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
                     class="bi bi-wallet2 me-3"></i><span>Recouvrement</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
+                    class="bi bi-cash me-3"></i><span>Titre de recettes</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
+        {% if _route starts with 'app_client_' or _route starts with 'app_representant_' %}active{% endif %}"
+               href="#" role="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#submenuClients"
+               aria-expanded="{% if _route starts with 'app_client_' or _route starts with 'app_representant_' %}true{% else %}false{% endif %}"
+               aria-controls="submenuClients">
+                <i class="bi bi-people-fill me-3"></i>
+                <span>Clients</span>
+            </a>
+
+            <div class="collapse {% if _route starts with 'app_client_' or _route starts with 'app_representant_' %}show{% endif %}" id="submenuClients">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="{{ path('app_client_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_client_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-building me-2"></i>
+                            <span>Société</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-person-vcard me-2"></i>
+                            <span>Représentants</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
 
         {% if is_granted('ROLE_ADMIN') %}
-        <li class="nav-item border-top mt-5">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
-                    class="bi bi-gear-fill me-3"></i><span>Paramètres</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 {% if _route == 'app_employe_index' %}active{% endif %}" href="{{ path('app_employe_index') }}"><i
-                    class="bi bi-people-fill me-3"></i><span>Employés</span></a>
-        </li>
-        <li class="nav-item">
+
+            <li class="nav-item border-top mt-5">
+                <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
+        {% if _route starts with 'app_parametre_' %}active{% endif %}"
+                   href="#" role="button"
+                   data-bs-toggle="collapse"
+                   data-bs-target="#submenuParametres"
+                   aria-expanded="{% if _route starts with 'app_parametre_' %}true{% else %}false{% endif %}"
+                   aria-controls="submenuParametres">
+                    <i class="bi bi-gear-fill me-3"></i>
+                    <span>Paramètres</span>
+                </a>
+
+                <div class="collapse {% if _route starts with 'app_parametre_' %}show{% endif %}" id="submenuParametres">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a href="#"
+                               class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route == 'app_parametre_entreprise' %} text-primary{% else %}text-muted{% endif %}">
+                                <i class="bi bi-buildings me-2"></i>
+                                <span>Mon entreprise</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route == 'app_parametre_unite' %}text-primary{% else %}text-muted{% endif %}">
+                                <i class="bi bi-rulers me-2"></i>
+                                <span>Unité de mesure</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1
                 {% if _route == 'admin_user_permissions' %}active{% endif %}
                 {% if _route == 'admin_user_permissions_toggle' %}active{% endif %}
