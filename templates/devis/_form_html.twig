@@ -1,0 +1,132 @@
+{{ form_start(form, {
+    action: devis.id
+    ? path('app_devis_edit', { id: devis.id })
+    : path('app_devis_new'),
+    method: 'POST',
+    attr: {
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
+    }
+}) }}
+
+<div data-controller="devis">
+    <div class="form-group row g-3">
+        <div class="col-6 mt-3">
+            <label for="" class="form-label">Numero</label>
+            <input type="text" class="form-control form-control-sm" disabled>
+        </div>
+        <div class="col-6 mt-3 ">{{ form_row(form.date) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.client) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.contactClient) }}</div>
+
+        {# Prototype de ligne préparé une seule fois #}
+        {% set lignePrototype %}
+            <tr data-devis-target="ligne">
+                <td>{{ form_widget(form.lignes.vars.prototype.designation) }}</td>
+                <td>{{ form_widget(form.lignes.vars.prototype.quantite, {'attr': {'data-action': 'input->devis#updateLine'}}) }}</td>
+                <td>{{ form_widget(form.lignes.vars.prototype.uom) }}</td>
+                <td>{{ form_widget(form.lignes.vars.prototype.prixUnitaire, {'attr': {'data-action': 'input->devis#updateLine'}}) }}</td>
+                <td>{{ form_widget(form.lignes.vars.prototype.montant, {'attr': {'readonly': true}}) }}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                            data-action="click->collection#remove">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        {% endset %}
+
+        <div class="col-12 mt-5">
+            <label for="itemsTable" class="form-label">Ligne de devis</label>
+            <div class="table-responsive"
+                 data-controller="collection devis"
+                 data-collection-target="container"
+                 data-prototype="{{ lignePrototype|e('html_attr') }}">
+
+                <table class="table table-bordered" id="itemsTable">
+                    <thead>
+                    <tr>
+                        <th class="col-article text-center">Désignation</th>
+                        <th class="col-qty text-center">Quantité</th>
+                        <th class="col-uom text-center">U.Mesure</th>
+                        <th class="col-price text-center">P. unitaire</th>
+                        <th class="col-total text-center">Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody data-collection-target="container" data-devis-target="lignes">
+                    {% for ligneForm in form.lignes %}
+                        <tr data-devis-target="ligne">
+                            <td>{{ form_widget(ligneForm.designation) }}</td>
+                            <td>{{ form_widget(ligneForm.quantite, {'attr': {'data-devis-target': 'quantite', 'data-action': 'input->devis#updateLine'}}) }}</td>
+                            <td>{{ form_widget(ligneForm.uom) }}</td>
+                            <td>{{ form_widget(ligneForm.prixUnitaire, {'attr': {'data-devis-target': 'prixUnitaire', 'data-action': 'input->devis#updateLine'}}) }}</td>
+                            <td>{{ form_widget(ligneForm.montant, {'attr': {'data-devis-target': 'montant', 'readonly': true}}) }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        data-action="click->collection#remove">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <button type="button" class="btn btn-secondary btn-sm mt-2"
+                        data-action="click->collection#add">
+                    <i class="bi bi-plus me-1"></i> Ajouter une ligne
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.totalHT)}} :</strong>
+                <span>{{ form_widget(form.totalHT, {'attr': {'data-devis-target': 'totalHT'}}) }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.tauxTVA)}} :</strong>
+                <span>{{ form_widget(form.tauxTVA, {
+                        'attr': {
+                            'data-devis-target': 'tauxTVA',
+                            'data-action': 'input->devis#updateTotals'
+                        }
+                    }) }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.totalTVA) }}:</strong>
+                <span>{{ form_widget(form.totalTVA, {'attr': {'data-devis-target': 'totalTVA'}}) }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.remise) }}:</strong>
+                <span>{{ form_widget(form.remise, {'attr': {'data-devis-target': 'remise', 'data-action': 'input->devis#updateTotals'}}) }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.totalTTC)}} :</strong>
+                <span class="text-primary fw-bold fs-4">{{ form_widget(form.totalTTC, {'attr': {'data-devis-target': 'totalTTC'}}) }}</span>
+            </div>
+        </div>
+
+        <div class="col-6 mt-5">{{ form_row(form.noteInterne) }}</div>
+        <div class="col-6 mt-5">{{ form_row(form.noteClient) }}</div>
+        {{ form_rest(form) }}
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-6 d-grid gap-2">
+            <a href="{{ absolute_url(path('app_devis_index') )}}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
+                <i class="bi bi-x-lg me-2"></i>Annuler
+            </a>
+        </div>
+        <div class="col-6 d-grid gap-2">
+            <button type="submit" class="btn btn-chart" id="sendBtn">
+                <i class="bi bi-save me-2"></i>
+                {{ devis.id ? 'Modifier' : 'Enregistrer' }}
+            </button>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

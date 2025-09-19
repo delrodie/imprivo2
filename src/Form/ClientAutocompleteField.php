@@ -16,13 +16,16 @@ class ClientAutocompleteField extends AbstractType
     {
         $resolver->setDefaults([
             'class' => Client::class,
-            'searchable_fields' => ['nom'],
+            'searchable_fields' => ['nom','telephone'],
             'label' => 'Client',
             'choice_label' => 'nom',
             'constraints' =>[
                 new Count(min:1, minMessage: 'Veuillez sélectionnez un client')
             ],
-            'placeholder' => "-- Selectionnez le client --"
+            'placeholder' => "-- Selectionnez le client --",
+            'options_as_html' => true,
+            'allow_options_create' => true,
+            'min_characters' => 3,
         ]);
     }
 

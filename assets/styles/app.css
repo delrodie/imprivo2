@@ -148,6 +148,10 @@ body {
 .col-total {
     width: 15%;
 }
+#itemsTable th{
+    font-size: .9rem;
+    font-weight: 500;
+}
 
 .dt-buttons{
     margin-bottom: 10px;

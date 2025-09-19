@@ -68,6 +68,9 @@ class Devis
     #[ORM\Column(nullable: true)]
     private ?float $remise = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $tauxTVA = null;
+
     public function __construct()
     {
         $this->lignes = new ArrayCollection();
@@ -284,6 +287,18 @@ class Devis
     public function setRemise(?float $remise): static
     {
         $this->remise = $remise;
+
+        return $this;
+    }
+
+    public function getTauxTVA(): ?float
+    {
+        return $this->tauxTVA;
+    }
+
+    public function setTauxTVA(?float $tauxTVA): static
+    {
+        $this->tauxTVA = $tauxTVA;
 
         return $this;
     }

@@ -78,8 +78,12 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="devis.html"><i
-                    class="bi bi-file-earmark-text me-3"></i><span>Dévis</span></a>
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1
+                {% if _route starts with 'app_devis_' %}active{% endif %}"
+               href="{{ path('app_devis_index') }}"
+            >
+                <i class="bi bi-file-earmark-text me-3"></i><span>Dévis</span>
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i

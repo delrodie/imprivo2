@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,9 +34,9 @@ class DevisType extends AbstractType
                 'label' => "Total HT",
                 'label_attr' => ['class' => 'form-label']
             ])
-            ->add('totalTVA', IntegerType::class,[
+            ->add('totalTVA', null,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => "off", 'readonly' => true],
-                'label' => "total TVA",
+                'label' => "Total TVA",
                 'label_attr' => ['class' => 'form-label']
             ])
             ->add('totalTTC', IntegerType::class,[
@@ -43,11 +44,22 @@ class DevisType extends AbstractType
                 'label' => "Total TTC",
                 'label_attr' => ['class' => 'form-label']
             ])
-            ->add('statut', EnumType::class,[
-                'class' => DevisStatut::class,
-                'label' => "Statut",
+            ->add('tauxTVA', IntegerType::class,[
+                'attr' => [
+                    'class' => 'form-control form-control-sm', 'autocomplete' => "off",
+                    'step' => '0.01',
+                    'min' => 0,
+//                    'data-devis-target' => 'tauxTVA',
+//                    'data-action' => 'input->devis#updateTotals'
+                ],
+                'label' => "Taux TVA (%)",
                 'label_attr' => ['class' => 'form-label']
             ])
+//            ->add('statut', EnumType::class,[
+//                'class' => DevisStatut::class,
+//                'label' => "Statut",
+//                'label_attr' => ['class' => 'form-label']
+//            ])
 //            ->add('createdAt', null, [
 //                'widget' => 'single_text',
 //            ])
@@ -71,15 +83,16 @@ class DevisType extends AbstractType
             ->add('remise', IntegerType::class,[
                 'attr' =>['class' => 'form-control form-control-sm', 'autocomplete' => 'off'],
                 'label' => 'Remise(%)',
-                'label_attr' => ['class' => 'form-control form-control-sm'],
+                'label_attr' => ['class' => 'form-label'],
                 'required' => false
             ])
-            ->add('client', EntityType::class, [
+            ->add('client', ClientAutocompleteField::class, [
                 'class' => Client::class,
                 'choice_label' => 'nom',
                 'label' => "Client",
-                'label_attr' =>['class' => 'form-select form-select-sm'],
+                'label_attr' =>['class' => 'form-label'],
                 'placeholder' => "-- Selectionnez le client --",
+//                'attr' => ['class' => 'form-select form-select-sm'],
             ])
             ->add('contactClient', EntityType::class, [
                 'class' => Representant::class,
@@ -94,7 +107,7 @@ class DevisType extends AbstractType
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => true,
+                'by_reference' => false,
             ])
         ;
     }

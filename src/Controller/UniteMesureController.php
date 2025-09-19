@@ -88,9 +88,6 @@ class UniteMesureController extends AbstractController
                     'unite_mesure' => $uniteMesure
                 ])
             ]);
-
-
-            return new JsonResponse(['success' => true]);
         }
 
         return new JsonResponse([
