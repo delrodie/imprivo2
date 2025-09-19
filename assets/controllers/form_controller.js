@@ -23,6 +23,7 @@ export default class extends Controller {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    form.reset()
                     // Fermer l’offcanvas
                     const offcanvasElement = document.getElementById("offcanvasDevis")
                     const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement)

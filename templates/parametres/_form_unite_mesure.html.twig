@@ -1,0 +1,37 @@
+{{ form_start(form, {
+    action: unite_mesure.id
+    ? path('app_unitemesure_edit', { id: unite_mesure.id })
+    : path('app_unitemesure_new'),
+    method: 'POST',
+    attr: {
+        'data-controller': 'form',
+        'data-form-target': 'form',
+        'data-action': 'submit->form#submit'
+    }
+}) }}
+<div class="form-group row g-3">
+    <div class="col-12 mt-3">{{ form_row(form.libelle) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.code) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.symbole) }}</div>
+    <div class="col-12 mt-3 me-3">
+        <div class="form-check me-3">
+            {{ form_widget(form.actif) }}{{ form_label(form.actif) }}{{ form_errors(form.actif) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</div>
+
+<div class="row mt-5">
+    <div class="col-6 d-grid gap-2">
+        <a href="{{ absolute_url(path('api_unite_mesure_index') )}}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-2"></i>Annuler
+        </a>
+    </div>
+    <div class="col-6 d-grid gap-2">
+        <button type="submit" class="btn btn-chart" id="sendBtn">
+            <i class="bi bi-save me-2"></i>
+            {{ unite_mesure.id ? 'Modifier' : 'Enregistrer' }}
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

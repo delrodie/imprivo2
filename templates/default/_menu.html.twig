@@ -134,17 +134,17 @@
 
             <li class="nav-item border-top mt-5">
                 <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
-        {% if _route starts with 'app_parametre_' %}active{% endif %}"
+                    {% if _route starts with 'app_unitemesure_' %}active{% endif %}"
                    href="#" role="button"
                    data-bs-toggle="collapse"
                    data-bs-target="#submenuParametres"
-                   aria-expanded="{% if _route starts with 'app_parametre_' %}true{% else %}false{% endif %}"
+                   aria-expanded="{% if _route starts with 'app_unitemesure_' %}true{% else %}false{% endif %}"
                    aria-controls="submenuParametres">
                     <i class="bi bi-gear-fill me-3"></i>
                     <span>Paramètres</span>
                 </a>
 
-                <div class="collapse {% if _route starts with 'app_parametre_' %}show{% endif %}" id="submenuParametres">
+                <div class="collapse {% if _route starts with 'app_unitemesure_' %}show{% endif %}" id="submenuParametres">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li>
                             <a href="#"
@@ -155,9 +155,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ path('app_unitemesure_index') }}"
                                class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
-                          {% if _route == 'app_parametre_unite' %}text-primary{% else %}text-muted{% endif %}">
+                          {% if _route == 'app_unitemesure_index' %}text-primary{% else %}text-muted{% endif %}">
                                 <i class="bi bi-rulers me-2"></i>
                                 <span>Unité de mesure</span>
                             </a>
