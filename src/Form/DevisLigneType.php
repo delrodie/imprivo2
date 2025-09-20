@@ -8,6 +8,7 @@ use App\Entity\UniteMesure;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,15 +23,31 @@ class DevisLigneType extends AbstractType
                 'label' => "Désignation",
             ])
             ->add('quantite', IntegerType::class,[
-                'attr' => ['class' => 'form-control form-control-sm', 'autocomplete'=>'off'],
+                'attr' => [
+                    'class' => 'form-control form-control-sm text-center',
+                    'autocomplete'=>'off',
+                    'step' => '1',
+                    'min' => 0,
+                    'value' => 1
+                ],
                 'label' => "Quantité",
             ])
             ->add('prixUnitaire', IntegerType::class,[
-                'attr' => ['class' => 'form-control form-control-sm', 'autocomplete'=>'off'],
+                'attr' => [
+                    'class' => 'form-control form-control-sm text-center',
+                    'autocomplete'=>'off',
+                    'step' => '25',
+                    'min' => 25,
+//                    'value' => 100
+                ],
                 'label' => "P. Unitaire",
             ])
-            ->add('montant', IntegerType::class,[
-                'attr' => ['class' => 'form-control form-control-sm', 'autocomplete'=>'off', 'readonly' => true],
+            ->add('montant', NumberType::class,[
+                'attr' => [
+                    'class' => 'form-control form-control-sm text-end',
+                    'autocomplete'=>'off',
+                    'readonly' => true,
+                ],
                 'label' => "Montant",
             ])
 //            ->add('details')
@@ -38,13 +55,13 @@ class DevisLigneType extends AbstractType
 //                'class' => Devis::class,
 //                'choice_label' => 'id',
 //            ])
-            ->add('uom', EntityType::class, [
-                'class' => UniteMesure::class,
-                'choice_label' => 'libelle',
-                'label' => "Unité de mesure",
-                'required' => false,
-                'placeholder' => "-- Selectionnez --",
-                'autocomplete' => true
+            ->add('uom', UomAutocompleteField::class, [
+//                'class' => UniteMesure::class,
+//                'choice_label' => 'libelle',
+//                'label' => "Unité de mesure",
+//                'required' => false,
+//                'placeholder' => "-- Selectionnez --",
+//                'autocomplete' => true
             ])
         ;
     }

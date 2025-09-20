@@ -13,14 +13,14 @@
 <div data-controller="devis">
     <div class="form-group row g-3">
         <div class="col-6 mt-3">
-            <label for="" class="form-label">Numero</label>
+            <label class="form-label">Numéro</label>
             <input type="text" class="form-control form-control-sm" disabled>
         </div>
-        <div class="col-6 mt-3 ">{{ form_row(form.date) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.date) }}</div>
         <div class="col-6 mt-3">{{ form_row(form.client) }}</div>
         <div class="col-6 mt-3">{{ form_row(form.contactClient) }}</div>
 
-        {# Prototype de ligne préparé une seule fois #}
+        {# Prototype de ligne pour ajout dynamique #}
         {% set lignePrototype %}
             <tr data-devis-target="ligne">
                 <td>{{ form_widget(form.lignes.vars.prototype.designation) }}</td>
@@ -29,8 +29,7 @@
                 <td>{{ form_widget(form.lignes.vars.prototype.prixUnitaire, {'attr': {'data-action': 'input->devis#updateLine'}}) }}</td>
                 <td>{{ form_widget(form.lignes.vars.prototype.montant, {'attr': {'readonly': true}}) }}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger"
-                            data-action="click->collection#remove">
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-action="click->collection#remove">
                         <i class="bi bi-trash"></i>
                     </button>
                 </td>
@@ -38,20 +37,16 @@
         {% endset %}
 
         <div class="col-12 mt-5">
-            <label for="itemsTable" class="form-label">Ligne de devis</label>
-            <div class="table-responsive"
-                 data-controller="collection devis"
-                 data-collection-target="container"
-                 data-prototype="{{ lignePrototype|e('html_attr') }}">
-
+            <label class="form-label">Lignes de devis</label>
+            <div class="table-responsive" data-controller="collection" data-collection-target="container" data-prototype="{{ lignePrototype|e('html_attr') }}">
                 <table class="table table-bordered" id="itemsTable">
                     <thead>
                     <tr>
-                        <th class="col-article text-center">Désignation</th>
-                        <th class="col-qty text-center">Quantité</th>
-                        <th class="col-uom text-center">U.Mesure</th>
-                        <th class="col-price text-center">P. unitaire</th>
-                        <th class="col-total text-center">Total</th>
+                        <th class="text-center col-article">Désignation</th>
+                        <th class="text-center col-qty">Quantité</th>
+                        <th class="text-center">U.Mesure</th>
+                        <th class="text-center col-price">P. unitaire</th>
+                        <th class="text-center col-total">Total</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -62,10 +57,9 @@
                             <td>{{ form_widget(ligneForm.quantite, {'attr': {'data-devis-target': 'quantite', 'data-action': 'input->devis#updateLine'}}) }}</td>
                             <td>{{ form_widget(ligneForm.uom) }}</td>
                             <td>{{ form_widget(ligneForm.prixUnitaire, {'attr': {'data-devis-target': 'prixUnitaire', 'data-action': 'input->devis#updateLine'}}) }}</td>
-                            <td>{{ form_widget(ligneForm.montant, {'attr': {'data-devis-target': 'montant', 'readonly': true}}) }}</td>
+                            <td>{{ form_widget(ligneForm.montant, {'attr': {'data-devis-target': 'montant','readonly': true}}) }}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                        data-action="click->collection#remove">
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-action="click->collection#remove">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </td>
@@ -73,39 +67,75 @@
                     {% endfor %}
                     </tbody>
                 </table>
-
-                <button type="button" class="btn btn-secondary btn-sm mt-2"
-                        data-action="click->collection#add">
+                <button type="button" class="btn btn-secondary btn-sm mt-2" data-action="click->collection#add">
                     <i class="bi bi-plus me-1"></i> Ajouter une ligne
                 </button>
             </div>
         </div>
 
-        <div class="mt-5">
+        {# Section Totaux #}
+        <div class="mt-5 bloc-total">
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <strong>{{ form_label(form.totalHT)}} :</strong>
-                <span>{{ form_widget(form.totalHT, {'attr': {'data-devis-target': 'totalHT'}}) }}</span>
+                <span>
+                    {{ form_widget(form.totalHT, {
+                        'attr': {
+                            'data-devis-target': 'totalHT',
+                            'readonly': true,
+                            'class':'form-control form-control-sm text-end'
+                        }
+                    })
+                    }}
+                </span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <strong>{{ form_label(form.remise) }} :</strong>
+                <span>
+                    {{ form_widget(form.remise, {
+                        'attr': {
+                            'data-devis-target': 'remise',
+                            'data-action':'input->devis#updateTotals',
+                            'class':'form-control form-control-sm text-end'
+                        }})
+                    }}
+                </span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <strong>{{ form_label(form.tauxTVA)}} :</strong>
-                <span>{{ form_widget(form.tauxTVA, {
-                        'attr': {
+                <span>
+                    {{ form_widget(form.tauxTVA, {
+                        'attr':{
                             'data-devis-target': 'tauxTVA',
-                            'data-action': 'input->devis#updateTotals'
+                            'data-action':'input->devis#updateTotals',
+                            'class':'form-control form-control-sm text-end'
                         }
-                    }) }}</span>
+                    })
+                    }}
+                </span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <strong>{{ form_label(form.totalTVA) }}:</strong>
-                <span>{{ form_widget(form.totalTVA, {'attr': {'data-devis-target': 'totalTVA'}}) }}</span>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <strong>{{ form_label(form.remise) }}:</strong>
-                <span>{{ form_widget(form.remise, {'attr': {'data-devis-target': 'remise', 'data-action': 'input->devis#updateTotals'}}) }}</span>
+                <span>
+                    {{ form_widget(form.totalTVA, {
+                        'attr': {
+                            'data-devis-target': 'totalTVA',
+                            'readonly': true,
+                            'class':'form-control form-control-sm text-end'
+                        }})
+                    }}
+                </span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <strong>{{ form_label(form.totalTTC)}} :</strong>
-                <span class="text-primary fw-bold fs-4">{{ form_widget(form.totalTTC, {'attr': {'data-devis-target': 'totalTTC'}}) }}</span>
+                <span>
+                    {{ form_widget(form.totalTTC, {
+                        'attr': {
+                            'data-devis-target': 'totalTTC',
+                            'readonly': true,
+                            'class':'form-control form-control-sm text-end fw-bold text-primary fs-5'
+                        }})
+                    }}
+                </span>
             </div>
         </div>
 
@@ -114,19 +144,21 @@
         {{ form_rest(form) }}
     </div>
 
-    <div class="row mt-5">
-        <div class="col-6 d-grid gap-2">
-            <a href="{{ absolute_url(path('app_devis_index') )}}" class="btn btn-outline-secondary" id="cancelBtn" data-bs-dismiss="offcanvas">
-                <i class="bi bi-x-lg me-2"></i>Annuler
-            </a>
-        </div>
-        <div class="col-6 d-grid gap-2">
+
+    <div class="d-flex justify-content-between mt-5 mb-5">
+        <a href="{{ absolute_url(path('app_devis_index') )}}" class="btn btn-outline-secondary" id="cancelBtn">
+            <i class="bi bi-x-lg me-2"></i> Annuler
+        </a>
+        <div>
+            <button type="button" class="btn btn-outline-primary me-2" id="saveDraftBtn">
+                <i class="bi bi-pencil-square me-2"></i>{{ devis.id ? 'Modifier en brouillon' : 'Modifier et Envoyer' }}
+            </button>
             <button type="submit" class="btn btn-chart" id="sendBtn">
-                <i class="bi bi-save me-2"></i>
-                {{ devis.id ? 'Modifier' : 'Enregistrer' }}
+                <i class="bi bi-send-fill me-2"></i>{{ devis.id ? 'Modifier et Envoyer' : 'Sauvegarder et Envoyer' }}
             </button>
         </div>
     </div>
+
 </div>
 
 {{ form_end(form) }}

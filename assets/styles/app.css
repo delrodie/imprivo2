@@ -117,10 +117,6 @@ body {
      padding-bottom: 30px;
  }
 
-.form-label {
-    font-weight: bold;
-}
-
 .table-responsive {
     overflow-x: auto;
 }
@@ -134,19 +130,19 @@ body {
 
 /* Style pour les largeurs de colonnes */
 .col-article {
-    width: 50%;
+    width: 40%;
 }
 
 .col-qty {
-    width: 15%;
+    width: 10%;
 }
 
 .col-price {
-    width: 20%;
+    width: 15%;
 }
 
 .col-total {
-    width: 15%;
+    width: 20%;
 }
 #itemsTable th{
     font-size: .9rem;
@@ -191,4 +187,13 @@ body {
     color: red;
     font-style: italic;
     font-size: .9rem;
+    font-weight: 500;
+}
+
+.bloc-total strong{
+    width: 100%;
+    text-align: end;
+    display: flex;
+    justify-content: end;
+    padding-right: 20px;
 }

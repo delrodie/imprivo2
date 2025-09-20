@@ -29,17 +29,17 @@ class DevisType extends AbstractType
                 'label' => "Date",
                 'label_attr' => ['class' => 'form-label']
             ])
-            ->add('totalHT', IntegerType::class,[
+            ->add('totalHT', NumberType::class,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => "off", 'readonly' => true],
                 'label' => "Total HT",
                 'label_attr' => ['class' => 'form-label']
             ])
-            ->add('totalTVA', null,[
+            ->add('totalTVA', NumberType::class,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => "off", 'readonly' => true],
                 'label' => "Total TVA",
                 'label_attr' => ['class' => 'form-label']
             ])
-            ->add('totalTTC', IntegerType::class,[
+            ->add('totalTTC', NumberType::class,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => "off", 'readonly' => true],
                 'label' => "Total TTC",
                 'label_attr' => ['class' => 'form-label']
@@ -76,13 +76,18 @@ class DevisType extends AbstractType
             ])
             ->add('noteClient', TextareaType::class,[
                 'attr' => ['class' => 'form-control'],
-                'label' => "Note interne",
+                'label' => "Note au client",
                 'label_attr' => ['class' => 'form-label'],
                 'required' => false
             ])
             ->add('remise', IntegerType::class,[
-                'attr' =>['class' => 'form-control form-control-sm', 'autocomplete' => 'off'],
-                'label' => 'Remise(%)',
+                'attr' =>[
+                    'class' => 'form-control form-control-sm',
+                    'autocomplete' => 'off',
+                    'step' => '1',
+                    'min' => 0,
+                ],
+                'label' => 'Remise',
                 'label_attr' => ['class' => 'form-label'],
                 'required' => false
             ])

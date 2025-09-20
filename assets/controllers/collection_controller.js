@@ -19,14 +19,14 @@ export default class extends Controller {
         this.containerTarget.dataset.index = parseInt(index) + 1
 
         // 🔥 Déclenche recalcul auto
-        this.containerTarget.dispatchEvent(new Event("input", { bubbles: true }))
+        this.containerTarget.dispatchEvent(new Event("ligne:changed", { bubbles: true }))
     }
 
     remove(event) {
         event.preventDefault()
         event.target.closest("tr").remove()
 
-        // 🔥 Recalcul après suppression
-        this.containerTarget.dispatchEvent(new Event("input", { bubbles: true }))
+        // 🔥 Déclenche recalcul après suppression
+        this.containerTarget.dispatchEvent(new Event("ligne:changed", { bubbles: true }))
     }
 }
