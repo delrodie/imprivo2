@@ -197,3 +197,6 @@ body {
     justify-content: end;
     padding-right: 20px;
 }
+#devis_client{
+    color: var(--chart);
+}

@@ -27,7 +27,8 @@ class DevisType extends AbstractType
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => 'off'],
                 'widget' => 'single_text',
                 'label' => "Date",
-                'label_attr' => ['class' => 'form-label']
+                'label_attr' => ['class' => 'form-label'],
+                'data' => $options['data']->getDate() ?? new \DateTime(),
             ])
             ->add('totalHT', NumberType::class,[
                 'attr' => ['class' => 'form-control form-control-sm', 'autocomplete' => "off", 'readonly' => true],
@@ -97,15 +98,22 @@ class DevisType extends AbstractType
                 'label' => "Client",
                 'label_attr' =>['class' => 'form-label'],
                 'placeholder' => "-- Selectionnez le client --",
-//                'attr' => ['class' => 'form-select form-select-sm'],
+                'attr' => [
+                    'data-representant-target' => 'client',
+                    'data-action' => 'change->representant#update'
+                ],
             ])
             ->add('contactClient', EntityType::class, [
                 'class' => Representant::class,
                 'choice_label' => 'nom',
                 'label' => "Representant client",
                 "label_attr" => ['class' => 'form-label'],
-                "placeholder" => "-- Selectionnez le client du client --",
-                'attr' => ['class' => 'form-select form-select-sm']
+                "placeholder" => "-- Selectionnez le representant du client --",
+                'attr' => [
+                    'data-representant-target' => 'representant',
+                    'data-current' => $options['data']->getContactClient()?->getId()
+                ],
+                'autocomplete' => true,
             ])
             ->add('lignes', CollectionType::class,[
                 'entry_type' => DevisLigneType::class,

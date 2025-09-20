@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Entity\Client;
 use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,5 +51,19 @@ class ApiClientController extends AbstractController
                 'delete' => $canDelete
             ]
         ]);
+    }
+
+    #[Route('/{id}/representants', name:'api_client_representants', methods: ['GET'])]
+    public function getRepresentants(Client $client): JsonResponse
+    {
+        $representants = [];
+        foreach ($client->getRepresentants() as $representant) {
+            $representants[] = [
+                'id' => $representant->getId(),
+                'nom' => $representant->getNom().' '.$representant->getPrenom(),
+            ];
+        }
+
+        return new JsonResponse($representants);
     }
 }

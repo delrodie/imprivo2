@@ -17,8 +17,11 @@
             <input type="text" class="form-control form-control-sm" disabled>
         </div>
         <div class="col-6 mt-3">{{ form_row(form.date) }}</div>
-        <div class="col-6 mt-3">{{ form_row(form.client) }}</div>
-        <div class="col-6 mt-3">{{ form_row(form.contactClient) }}</div>
+        <div class="row" data-controller="representant">
+            <div class="col-6 mt-3">{{ form_row(form.client) }}</div>
+            <div class="col-6 mt-3">{{ form_row(form.contactClient) }}</div>
+        </div>
+
 
         {# Prototype de ligne pour ajout dynamique #}
         {% set lignePrototype %}
