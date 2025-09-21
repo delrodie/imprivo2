@@ -21,7 +21,7 @@ class SequenceDoc
     private ?string $prefix = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $format = null;
+    private ?string $format = "{prefix}-{YYYY}-{NNNN}";
 
     #[ORM\Column(nullable: true)]
     private ?int $compteur = 0;
