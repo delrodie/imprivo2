@@ -36,7 +36,7 @@ class DevisLigneType extends AbstractType
                 'attr' => [
                     'class' => 'form-control form-control-sm text-center',
                     'autocomplete'=>'off',
-                    'step' => '25',
+                    'step' => '5',
                     'min' => 25,
 //                    'value' => 100
                 ],

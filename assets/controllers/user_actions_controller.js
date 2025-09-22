@@ -4,11 +4,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
     static values = {
         editUrl: String,
-        deleteUrl: String
+        deleteUrl: String,
+        confirmMessage: { type: String, default: "Voulez-vous vraiment supprimer cet élément ?" },
+        successMessage: { type: String, default: "Opération effectuée avec succès !" },
+        errorMessage: { type: String, default: "Une erreur est survenue." }
     }
 
     connect() {
-        // Pour debug
         console.log("UserActionsController connecté")
     }
 
@@ -21,19 +23,18 @@ export default class extends Controller {
         })
             .then(response => response.text())
             .then(html => {
-                // Injecter le formulaire dans ton offcanvas
                 const offcanvasBody = document.querySelector("#offcanvasDevis .offcanvas-body")
                 offcanvasBody.innerHTML = html
 
-                // Ouvrir l’offcanvas via Bootstrap
                 const offcanvas = new bootstrap.Offcanvas(document.getElementById("offcanvasDevis"))
                 offcanvas.show()
             })
+            .catch(() => alert(this.errorMessageValue))
     }
 
     delete(event) {
         event.preventDefault()
-        if (!confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) return
+        if (!confirm(this.confirmMessageValue)) return
 
         fetch(this.deleteUrlValue, {
             method: "DELETE",
@@ -41,12 +42,13 @@ export default class extends Controller {
         })
             .then(response => {
                 if (response.ok) {
-                    // Rafraîchir DataTable sans recharger la page
                     const table = $('#tabList').DataTable()
                     table.ajax.reload()
+                    alert(this.successMessageValue)
                 } else {
-                    alert("Erreur lors de la suppression")
+                    alert(this.errorMessageValue)
                 }
             })
+            .catch(() => alert(this.errorMessageValue))
     }
 }
