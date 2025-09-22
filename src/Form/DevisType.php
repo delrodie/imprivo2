@@ -54,7 +54,8 @@ class DevisType extends AbstractType
 //                    'data-action' => 'input->devis#updateTotals'
                 ],
                 'label' => "Taux TVA (%)",
-                'label_attr' => ['class' => 'form-label']
+                'label_attr' => ['class' => 'form-label'],
+                'required' => false
             ])
 //            ->add('statut', EnumType::class,[
 //                'class' => DevisStatut::class,

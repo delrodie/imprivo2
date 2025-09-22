@@ -53,7 +53,7 @@ class Devis
     /**
      * @var Collection<int, DevisLigne>
      */
-    #[ORM\OneToMany(targetEntity: DevisLigne::class, mappedBy: 'devis')]
+    #[ORM\OneToMany(targetEntity: DevisLigne::class, mappedBy: 'devis', cascade: ['persist', 'remove'])]
     private Collection $lignes;
 
     #[ORM\ManyToOne]
@@ -70,6 +70,12 @@ class Devis
 
     #[ORM\Column(nullable: true)]
     private ?float $tauxTVA = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $sendedAt = null;
+
+    #[ORM\Column(length: 128, nullable: true)]
+    private ?string $sendedBy = null;
 
     public function __construct()
     {
@@ -299,6 +305,30 @@ class Devis
     public function setTauxTVA(?float $tauxTVA): static
     {
         $this->tauxTVA = $tauxTVA;
+
+        return $this;
+    }
+
+    public function getSendedAt(): ?\DateTimeImmutable
+    {
+        return $this->sendedAt;
+    }
+
+    public function setSendedAt(?\DateTimeImmutable $sendedAt): static
+    {
+        $this->sendedAt = $sendedAt;
+
+        return $this;
+    }
+
+    public function getSendedBy(): ?string
+    {
+        return $this->sendedBy;
+    }
+
+    public function setSendedBy(?string $sendedBy): static
+    {
+        $this->sendedBy = $sendedBy;
 
         return $this;
     }

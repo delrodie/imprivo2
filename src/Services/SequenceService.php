@@ -17,7 +17,7 @@ class SequenceService
 
     public function generateNumero($type): array|string|null
     {
-        $annee = (int) date('Y');
+        $annee = (int) date('Y'); //dd($annee);
         $sequence = $this->docRepository->findOneBy(['type' => $type, 'annee' => $annee]);
 
         if (!$sequence){
@@ -25,7 +25,7 @@ class SequenceService
             $sequence->setAnnee($annee);
             $sequence->setType($type);
             $sequence->setCompteur(0);
-            $sequence->setPrefix($type);
+            $sequence->setPrefix($type->value);
             $this->entityManager->persist($sequence);
         }
 
@@ -33,7 +33,7 @@ class SequenceService
         $this->entityManager->flush();
 
         return str_replace(
-            ['{prefix}', '{annee}', '{NNNN}'],
+            ['{prefix}', '{YYYY}', '{NNNN}'],
             [$sequence->getPrefix(), $annee, str_pad($sequence->getCompteur(), 4, '0', STR_PAD_LEFT)],
             $sequence->getFormat()
         );

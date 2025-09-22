@@ -30,8 +30,8 @@ class ApiDevisController extends AbstractController
                 'id' => $index +1,
                 'numero' => $devi->getNumero(),
                 'client' => $devi->getClient()->getNom(),
-                'date' => $devi->getDate(),
-                'montant' => $devi->getMontant(),
+                'date' => $devi->getDate()->format('Y-m-d'),
+                'montant' => $devi->getTotalTTC(),
                 'statut' => $devi->getStatut(),
                 'actions' => [
                     'detail' => $canRead ? $this->generateUrl('app_devis_show',['id' => $devi->getId()]): null,
