@@ -58,7 +58,9 @@ class DevisController extends AbstractController
     #[isGranted('devis.read')]
     public function show(Devis $devis)
     {
-
+        return $this->render('devis/show.html.twig',[
+            'devis' => $devis
+        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET','POST'])]

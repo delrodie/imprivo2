@@ -115,6 +115,11 @@
                                 data-user-actions-success-message-value="Le devis ${row.numero} a bien été supprimé."
                                 data-user-actions-error-message-value="Erreur lors de la suppression du devis ${row.numero}."
                             >
+                                ${data.detail ? `
+                                    <a href="${data.detail}" class="bouton btn-pdf" title="Détails">
+                                        <i class="bi bi-file-earmark-pdf""></i>
+                                    </a>` : ''
+                        }
                                 ${data.edit ? `
                                     <a href="#" data-action="click->user-actions#edit" class="bouton btn-modif" title="Modifier">
                                         <i class="bi bi-pencil-square"></i>

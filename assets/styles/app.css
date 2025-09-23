@@ -200,3 +200,20 @@ body {
 #devis_client{
     color: var(--chart);
 }
+
+.facture details p{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: .85rem;
+}
+
+.facture span{
+    font-weight: 500;
+    margin-left: 20px;
+    color: var(--chart);
+}
+
+.facture .no-bordered{
+    border: 0;
+}
