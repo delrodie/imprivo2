@@ -77,23 +77,160 @@
                 <i class="bi bi-speedometer2 me-3"></i><span>Tableau de bord</span>
             </a>
         </li>
+
+        {# Menu Devis #}
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1
-                {% if _route starts with 'app_devis_' %}active{% endif %}"
-               href="{{ path('app_devis_index') }}"
-            >
-                <i class="bi bi-file-earmark-text me-3"></i><span>Dévis</span>
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
+        {% if _route starts with 'app_devis_' or _route starts with 'app_devis_' %}active{% endif %}"
+               href="#" role="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#submenuDevis"
+               aria-expanded="{% if _route starts with 'app_devis_' or _route starts with 'app_devis_' %}true{% else %}false{% endif %}"
+               aria-controls="submenuDevis">
+                <i class="bi bi-file-earmark-text me-3"></i>
+                <span>Dévis</span>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
-                    class="bi bi-receipt-cutoff me-3"></i><span>Facture</span></a>
+
+            <div class="collapse {% if _route starts with 'app_devis_' or _route starts with 'app_devis_' %}show{% endif %}" id="submenuDevis">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="{{ path('app_devis_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_devis_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-globe me-2"></i>
+                            <span>Global</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_devis_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_client_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-file-earmark-minus me-2"></i>
+                            <span>Brouillon</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-hourglass-split me-2"></i>
+                            <span>En attente...</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-file-earmark-check me-2"></i>
+                            <span>Validés/Rejetés</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
+        {# Menu Facture #}
         <li class="nav-item">
-            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
-                    class="bi bi-wallet2 me-3"></i><span>Recouvrement</span></a>
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
+        {% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}active{% endif %}"
+               href="#" role="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#submenuFacture"
+               aria-expanded="{% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}true{% else %}false{% endif %}"
+               aria-controls="submenuFacture">
+                <i class="bi bi-receipt-cutoff me-3"></i>
+                <span>Facture</span>
+            </a>
+
+            <div class="collapse {% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}show{% endif %}" id="submenuFacture">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_facture_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-globe me-2"></i>
+                            <span>Global</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_client_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-file-earmark-plus me-2"></i>
+                            <span>À générer</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-hourglass-split me-2"></i>
+                            <span>En attente...</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-cash-stack me-2"></i>
+                            <span>Soldée</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
+
+        {# Menu Recouvrement #}
+        <li class="nav-item">
+            <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1 dropdown-toggle
+        {% if _route starts with 'app_recouvrement_' or _route starts with 'app_recouvrement_' %}active{% endif %}"
+               href="#" role="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#submenuRecouvrement"
+               aria-expanded="{% if _route starts with 'app_recouvrement_' or _route starts with 'app_recouvrement_' %}true{% else %}false{% endif %}"
+               aria-controls="submenuRecouvrement">
+                <i class="bi bi-wallet2 me-3"></i>
+                <span>Recouvrement</span>
+            </a>
+
+            <div class="collapse {% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}show{% endif %}" id="submenuRecouvrement">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_facture_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-globe me-2"></i>
+                            <span>Global</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_client_' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-cash-stack me-2"></i>
+                            <span>Paiements réçus</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-cash me-2"></i>
+                            <span>Impayés</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_representant_index') }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-cash-stack me-2"></i>
+                            <span>Soldée</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link text-muted d-flex align-items-center rounded-3 mb-1" href="#"><i
                     class="bi bi-cash me-3"></i><span>Titre de recettes</span></a>
