@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
 class Devis
@@ -16,6 +17,9 @@ class Devis
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'uuid', nullable: true)]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $numero = null;
@@ -80,6 +84,7 @@ class Devis
     public function __construct()
     {
         $this->lignes = new ArrayCollection();
+        $this->uuid = Uuid::v4();
     }
 
     public function getId(): ?int
@@ -329,6 +334,18 @@ class Devis
     public function setSendedBy(?string $sendedBy): static
     {
         $this->sendedBy = $sendedBy;
+
+        return $this;
+    }
+
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

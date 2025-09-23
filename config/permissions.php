@@ -24,4 +24,22 @@ return [
     ['code' => 'devis.read', 'label' => 'Voir les détails un devis'],
     ['code' => 'devis.update', 'label' => 'Modifier un devis'],
     ['code' => 'devis.delete', 'label' => 'Supprimer un devis'],
+
+    // Module FACTURE
+    ['code' => 'facture.create', 'label' => 'Créer une facture'],
+    ['code' => 'facture.read', 'label' => 'Voir les détails une facture'],
+    ['code' => 'facture.update', 'label' => 'Modifier une facture'],
+    ['code' => 'facture.delete', 'label' => 'Supprimer une facture'],
+
+    // Module VERSEMENT
+    ['code' => 'versement.create', 'label' => 'Créer un versement'],
+    ['code' => 'versement.read', 'label' => 'Voir les détails un versement'],
+    ['code' => 'versement.update', 'label' => 'Modifier un versement'],
+    ['code' => 'versement.delete', 'label' => 'Supprimer un versement'],
+
+    // Module TITRE DE RECETTE
+    ['code' => 'trecette.create', 'label' => 'Créer un trecette'],
+    ['code' => 'trecette.read', 'label' => 'Voir les détails un trecette'],
+    ['code' => 'trecette.update', 'label' => 'Modifier un trecette'],
+    ['code' => 'trecette.delete', 'label' => 'Supprimer un trecette'],
 ];

@@ -34,7 +34,7 @@ class ApiDevisController extends AbstractController
                 'montant' => $devi->getTotalTTC(),
                 'statut' => $devi->getStatut(),
                 'actions' => [
-                    'detail' => $canRead ? $this->generateUrl('app_devis_show',['id' => $devi->getId()]): null,
+                    'detail' => $canRead ? $this->generateUrl('app_devis_show',['uuid' => $devi->getUuid()]): null,
                     'edit' => $canUpdate ? $this->generateUrl('app_devis_edit',['id' => $devi->getId()]): null,
                     'delete' => $canDelete ? $this->generateUrl('app_devis_delete',['id' => $devi->getId()]) : null ,
                 ]

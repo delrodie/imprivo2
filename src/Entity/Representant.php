@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RepresentantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: RepresentantRepository::class)]
 class Representant
@@ -12,6 +13,9 @@ class Representant
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $nom = null;
@@ -45,6 +49,11 @@ class Representant
 
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $updatedBy = null;
+
+    public function __construct()
+    {
+        $this->uuid = Uuid::v4();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +188,18 @@ class Representant
     public function setUpdatedBy(?string $updatedBy): static
     {
         $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

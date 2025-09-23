@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -16,6 +17,9 @@ class Client
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 8, nullable: true)]
     private ?string $code = null;
@@ -65,6 +69,7 @@ class Client
     public function __construct()
     {
         $this->representants = new ArrayCollection();
+        $this->uuid = Uuid::v4();
     }
 
     public function getId(): ?int
@@ -254,6 +259,18 @@ class Client
                 $representant->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

@@ -54,12 +54,12 @@ class DevisController extends AbstractController
         return $this->handleForm($request, $devis, true);
     }
 
-    #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
+    #[Route('/{uuid}', name: 'app_devis_show', methods: ['GET'])]
     #[isGranted('devis.read')]
-    public function show(Devis $devis)
+    public function show($uuid)
     {
         return $this->render('devis/show.html.twig',[
-            'devis' => $devis
+            'devis' => $this->devisRepository->findOneBy(['uuid' => $uuid])
         ]);
     }
 

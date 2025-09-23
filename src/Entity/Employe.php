@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EmployeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
 //#[ORM\EntityListeners(['App\EventListener\EmployeListener'])]
@@ -14,6 +15,9 @@ class Employe
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $nom = null;
@@ -44,6 +48,11 @@ class Employe
 
     #[ORM\OneToOne(inversedBy: 'employe', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->uuid = Uuid::v4();
+    }
 
     public function getId(): ?int
     {
@@ -180,5 +189,17 @@ class Employe
     public function setUpdatedAtValue(): \DateTimeImmutable
     {
         return $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 }
