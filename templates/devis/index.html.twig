@@ -7,12 +7,14 @@
             <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
                 <h1 class="h3 fw-bold mb-0">Liste des devis</h1>
                 <!-- Bouton pour ouvrir l'offcanvas -->
-                <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
-                        type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
-                        aria-controls="offcanvasDevis">
-                    <i class="bi bi-plus-circle-fill me-2"></i>
-                    Créer un nouveau devis
-                </button>
+                {% if is_granted('devis.create') %}
+                    <button id="createDevisBtn" class="btn btn-chart d-flex align-items-center fw-bold rounded-3"
+                            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevis"
+                            aria-controls="offcanvasDevis">
+                        <i class="bi bi-plus-circle-fill me-2"></i>
+                        Créer un nouveau devis
+                    </button>
+                {% endif %}
             </div>
 
 

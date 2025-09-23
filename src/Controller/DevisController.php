@@ -47,7 +47,7 @@ class DevisController extends AbstractController
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET','POST'])]
-//    #[isGranted('devis.create')]
+    #[isGranted('devis.create')]
     public function new(Request $request): JsonResponse|Response|null
     {
         $devis = new Devis();
@@ -64,7 +64,7 @@ class DevisController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET','POST'])]
-    #[isGranted('devis.edit')]
+    #[isGranted('devis.update')]
     public function edit(Request $request, Devis $devis)
     {
         return $this->handleForm($request, $devis);
