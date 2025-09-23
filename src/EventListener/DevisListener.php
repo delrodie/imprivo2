@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\Devis;
+use App\Entity\DevisLog;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;

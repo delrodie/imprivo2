@@ -6,10 +6,12 @@ namespace App\Controller;
 
 use App\Entity\Devis;
 use App\Entity\DevisLigne;
+use App\Entity\DevisLog;
 use App\Enum\DevisStatut;
 use App\Enum\SequenceDocType;
 use App\Form\DevisType;
 use App\Repository\DevisRepository;
+use App\Services\Action;
 use App\Services\SequenceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,18 +112,29 @@ class DevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $user = $this->security->getUser()->getUserIdentifier();
+
+            // Gestion des devisLog
+            $dlogs = new DevisLog();
+            $dlogs->setDevis($devis);
+            $dlogs->setCreatedAt(new \DateTimeImmutable());
+            $dlogs->setAutheur($user);
+
             // Gestion du statut via le bouton submit
             $action = $request->request->get('btnAction');
             if ($action === 'envoyer'){
                 $devis->setStatut(DevisStatut::ENVOYE);
                 $devis->setSendedAt(new \DateTimeImmutable());
-                $devis->setSendedBy($this->security->getUser()->getUserIdentifier());
+                $devis->setSendedBy($user);
+
+                $dlogs->setAction(Action::DEVIS_ENVOYE);
             }else{
                 $devis->setStatut(DevisStatut::BROUILLON);
             }
 
             if ($isNew) {
                 $devis->setNumero($this->sequenceService->generateNumero(SequenceDocType::DEV)) ;
+                $dlogs->setAction(Action::DEVIS_CREE);
 
                 // Synchronisation des lignes
                 foreach ($devis->getLignes() as $ligne){
@@ -131,6 +144,7 @@ class DevisController extends AbstractController
                 $this->entityManager->persist($devis);
             }
 
+            $this->entityManager->persist($dlogs);
             $this->entityManager->flush();
 
             $devis = new Devis(); // nouveau formulaire vierge

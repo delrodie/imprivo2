@@ -81,10 +81,17 @@ class Devis
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $sendedBy = null;
 
+    /**
+     * @var Collection<int, DevisLog>
+     */
+    #[ORM\OneToMany(targetEntity: DevisLog::class, mappedBy: 'devis')]
+    private Collection $logs;
+
     public function __construct()
     {
         $this->lignes = new ArrayCollection();
         $this->uuid = Uuid::v4();
+        $this->logs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -346,6 +353,36 @@ class Devis
     public function setUuid(?Uuid $uuid): static
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DevisLog>
+     */
+    public function getLogs(): Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(DevisLog $log): static
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs->add($log);
+            $log->setDevis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(DevisLog $log): static
+    {
+        if ($this->logs->removeElement($log)) {
+            // set the owning side to null (unless already changed)
+            if ($log->getDevis() === $this) {
+                $log->setDevis(null);
+            }
+        }
 
         return $this;
     }

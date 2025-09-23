@@ -96,60 +96,61 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
     <script>
-        new DataTable('#tabList', {
-            ajax: "{{ path('api_devis_index') }}",
-            columns: [
-                { data: 'id' },
-                { data: 'numero', className: 'text-center'},
-                { data: 'date', className: 'text-center'},
-                { data: 'client'},
-                { data: 'montant', className: 'text-end'},
-                { data: 'statut', className: 'text-center'},
-                {
-                    data: 'actions',
-                    render: function (data, type, row) {
-                        return `
-                            <div class="d-flex gap-2 justify-content-center"
-                                data-controller="user-actions"
-                                data-user-actions-edit-url-value="${data.edit ?? ''}"
-                                data-user-actions-delete-url-value="${data.delete ?? ''}"
-                                data-user-actions-confirm-message-value="Voulez-vous vraiment supprimer le devis ${row.numero} ?"
-                                data-user-actions-success-message-value="Le devis ${row.numero} a bien été supprimé."
-                                data-user-actions-error-message-value="Erreur lors de la suppression du devis ${row.numero}."
-                            >
-                                ${data.detail ? `
-                                    <a href="${data.detail}" class="bouton btn-pdf" title="Détails">
-                                        <i class="bi bi-file-earmark-pdf""></i>
-                                    </a>` : ''
+        $(document).ready(function () {
+            $('#tabList').DataTable({
+                ajax: "{{ path('api_devis_index') }}",
+                columns: [
+                    { data: 'id' },
+                    { data: 'numero', className: 'text-center'},
+                    { data: 'date', className: 'text-center'},
+                    { data: 'client'},
+                    { data: 'montant', className: 'text-end'},
+                    { data: 'statut', className: 'text-center'},
+                    {
+                        data: 'actions',
+                        render: function (data, type, row) {
+                            return `
+                        <div class="d-flex gap-2 justify-content-center"
+                            data-controller="user-actions"
+                            data-user-actions-edit-url-value="${data.edit ?? ''}"
+                            data-user-actions-delete-url-value="${data.delete ?? ''}"
+                            data-user-actions-confirm-message-value="Voulez-vous vraiment supprimer le devis ${row.numero} ?"
+                            data-user-actions-success-message-value="Le devis ${row.numero} a bien été supprimé."
+                            data-user-actions-error-message-value="Erreur lors de la suppression du devis ${row.numero}."
+                        >
+                            ${data.detail ? `
+                                <a href="${data.detail}" class="bouton btn-pdf" title="Détails">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </a>` : ''
+                            }
+                            ${data.edit ? `
+                                <a href="#" data-action="click->user-actions#edit" class="bouton btn-modif" title="Modifier">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>` : ''
+                            }
+                            ${data.delete ? `
+                                <a href="#" data-action="click->user-actions#delete" class="bouton btn-sup" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </a>` : ''
+                            }
+                        </div>
+                        `
                         }
-                                ${data.edit ? `
-                                    <a href="#" data-action="click->user-actions#edit" class="bouton btn-modif" title="Modifier">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>` : ''
-                                                }
-                                ${data.delete ? `
-                                    <a href="#" data-action="click->user-actions#delete" class="bouton btn-sup" title="Supprimer">
-                                        <i class="bi bi-trash"></i>
-                                    </a>` : ''
-                                                }
-                            </div>
-                            `
                     }
-
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    { extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copier', className: 'btn btn-secondary btn-sm' },
+                    { extend: 'excelHtml5', text: '<i class="bi bi-file-earmark-excel"></i> Excel', className: 'btn btn-secondary btn-sm' },
+                    { extend: 'csvHtml5', text: '<i class="bi bi-filetype-csv"></i> CSV', className: 'btn btn-secondary btn-sm' },
+                    { extend: 'print', text: '<i class="bi bi-printer"></i> Imprimer', className: 'btn btn-secondary btn-sm' },
+                    { extend: 'colvis', text: '<i class="bi bi-eye"></i> Colonnes', className: 'btn btn-dark btn-sm' }
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/fr-FR.json"
                 }
-            ],
-            dom: 'Bfrtip',
-            buttons: [
-                { extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copier', className: 'btn btn-secondary btn-sm' },
-                { extend: 'excelHtml5', text: '<i class="bi bi-file-earmark-excel"></i> Excel', className: 'btn btn-secondary btn-sm' },
-                { extend: 'csvHtml5', text: '<i class="bi bi-filetype-csv"></i> CSV', className: 'btn btn-secondary btn-sm' },
-                // { extend: 'pdfHtml5', text: '<i class="bi bi-file-earmark-pdf"></i> PDF', className: 'btn btn-danger btn-sm' },
-                { extend: 'print', text: '<i class="bi bi-printer"></i> Imprimer', className: 'btn btn-secondary btn-sm' },
-                { extend: 'colvis', text: '<i class="bi bi-eye"></i> Colonnes', className: 'btn btn-dark btn-sm' }
-            ],
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/fr-FR.json"
-            }
+            });
         });
+
     </script>
 {% endblock %}
