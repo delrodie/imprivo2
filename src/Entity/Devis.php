@@ -84,7 +84,7 @@ class Devis
     /**
      * @var Collection<int, DevisLog>
      */
-    #[ORM\OneToMany(targetEntity: DevisLog::class, mappedBy: 'devis')]
+    #[ORM\OneToMany(targetEntity: DevisLog::class, mappedBy: 'devis', cascade: ['persist', 'remove'])]
     private Collection $logs;
 
     public function __construct()
