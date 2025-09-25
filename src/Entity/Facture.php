@@ -20,7 +20,7 @@ class Facture
     #[ORM\ManyToOne(inversedBy: 'factures')]
     private ?Client $client = null;
 
-    #[ORM\Column(type: 'uuid', nullable: true)]
+    #[ORM\Column(type: 'uuid', unique: true)]
     private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 50, nullable: true)]

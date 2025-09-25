@@ -145,35 +145,35 @@
             <div class="collapse {% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}show{% endif %}" id="submenuFacture">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
-                        <a href="#"
+                        <a href="{{ path('app_facture_index') }}"
                            class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
-                          {% if _route starts with 'app_facture_' %}text-primary{% else %}text-muted{% endif %}">
+                          {% if _route starts with 'app_facture_index' %}text-primary{% else %}text-muted{% endif %}">
                             <i class="bi bi-globe me-2"></i>
                             <span>Global</span>
                         </a>
                     </li>
                     <li>
+                        <a href="{{ path('app_facture_statut', {'statut': 'VALIDEE'}) }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_facture_sss' %}text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-file-plus me-2"></i>
+                            <span>Validée</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_facture_statut', {'statut': 'ANNULEE'}) }}"
+                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
+                          {% if _route starts with 'app_facture_sss' %} text-primary{% else %}text-muted{% endif %}">
+                            <i class="bi bi-file-excel me-2"></i>
+                            <span>Annulée</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#"
-                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
-                          {% if _route starts with 'app_client_' %}text-primary{% else %}text-muted{% endif %}">
-                            <i class="bi bi-file-earmark-plus me-2"></i>
-                            <span>À générer</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_representant_index') }}"
-                           class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
-                          {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
-                            <i class="bi bi-hourglass-split me-2"></i>
-                            <span>En attente...</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_representant_index') }}"
                            class="nav-link d-flex align-items-center rounded-3 mb-1 ps-5
                           {% if _route starts with 'app_representant_' %} text-primary{% else %}text-muted{% endif %}">
                             <i class="bi bi-cash-stack me-2"></i>
-                            <span>Soldée</span>
+                            <span>En paiement...</span>
                         </a>
                     </li>
                 </ul>
@@ -193,7 +193,7 @@
                 <span>Recouvrement</span>
             </a>
 
-            <div class="collapse {% if _route starts with 'app_facture_' or _route starts with 'app_facture_' %}show{% endif %}" id="submenuRecouvrement">
+            <div class="collapse {% if _route starts with 'app_recouvrement_' or _route starts with 'app_recouvrement_' %}show{% endif %}" id="submenuRecouvrement">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="#"
