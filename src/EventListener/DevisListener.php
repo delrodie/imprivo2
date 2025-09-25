@@ -4,7 +4,10 @@ namespace App\EventListener;
 
 use App\Entity\Devis;
 use App\Entity\DevisLog;
+use App\Services\Action;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -15,7 +18,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 #[AsEntityListener(event: 'preUpdate', method: 'preUpdate', entity: Devis::class)]
 final class DevisListener
 {
-    public function __construct(private readonly Security $security)
+    public function __construct(private readonly Security $security, private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -30,8 +33,9 @@ final class DevisListener
     public function preUpdate(Devis $devis, PreUpdateEventArgs $args): void
     {
         $user = $this->security->getUser();
-        if ($user) $devis->setUpdatedBy($user);
+        if ($user) $devis->setUpdatedBy($user); dump($args->hasChangedField('statut'));
 
         $devis->setUpdatedAt(new \DateTimeImmutable());
     }
+
 }

@@ -117,22 +117,42 @@
 
                                 {% if devis.statut.value == 'TRANSFORME' %}
                                     <a href="{{ path('app_devis_index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-reply-all"></i> ANNULER</a>
-                                    <a href="#" class="btn btn-chart btn-sm">Transformé en facture</a>
+                                    <a href="#" class="btn btn-outline-primary disabled btn-sm">Transformé en facture</a>
                                 {% elseif devis.statut.value == 'ACCEPTE' %}
                                     <a href="{{ path('app_devis_index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-reply-all"></i> ANNULER</a>
-                                    <a href="#" class="btn btn-chart btn-sm">A transformer en facture</a>
-                                {% elseif devis.statut.value == 'ENVOYE' %}
-                                    <a href="{{ path('app_devis_index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-reply-all"></i> ANNULER</a>
-                                    <a href="#" class="btn btn-secondary btn-sm me-3"><i class="bi bi-file-earmark-medical"></i> Brouillon</a>
                                     <button
                                         type="submit"
                                         name="devis_btn"
-                                        value="rejeter"
+                                        value="transformer"
                                         data-redirect="{{ path('app_devis_index') }}"
-                                        data-message="Devis rejeté ❌"
+                                        data-message="Devis transformé en facture avec succès!"
+                                        class="btn btn-chart btn-sm me-3"
+                                    >
+                                        <i class="bi bi-file-earmark-medical"></i> A TRANSFORMER EN FACTURE
+                                    </button>
+
+                                {% elseif devis.statut.value == 'ENVOYE' %}
+                                    <a href="{{ path('app_devis_index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-reply-all"></i> ANNULER</a>
+                                    <button
+                                        type="submit"
+                                        name="devis_btn"
+                                        value="brouillon"
+                                        data-redirect="{{ path('app_devis_index') }}"
+                                        data-message="Devis converti en brouillon"
+                                        class="btn btn-secondary btn-sm me-3"
+                                    >
+                                        <i class="bi bi-file-earmark-medical"></i> BROUILLON
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        name="devis_btn"
+                                        value="refuser"
+                                        data-redirect="{{ path('app_devis_index') }}"
+                                        data-message="Devis réfusé ❌"
                                         class="btn btn-danger btn-sm me-3"
                                     >
-                                        <i class="bi bi-x-square"></i> REJETER
+                                        <i class="bi bi-x-square"></i> REFUSER
                                     </button>
 
                                     <button
