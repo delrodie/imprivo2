@@ -5,13 +5,100 @@
 {% block body %}
     <main class="main-content" data-sidebar-target="mainContent">
         <div class="container-fluid">
+            <!-- Section Dernières sorties -->
+            <div>
+                <div class="mb-3">
+                    <h3 class="h4 fw-bold">Les statistiques</h3>
+                    <p class="text-muted small">Données | année 2025</p>
+                </div>
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-4">
+                    <!-- Carte Ajouter une nouvelle sortie -->
+{#                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">#}
+{#                        <div#}
+{#                            class="card bg-white p-3 h-100 shadow-sm border border-dashed border-primary text-primary d-flex flex-column align-items-center justify-content-center cursor-pointer">#}
+{#                            <i class="bi bi-plus-circle-fill fs-4 mb-2"></i>#}
+{#                            <span class="fw-semibold text-center small">Créer un nouveau dévis</span>#}
+{#                        </div>#}
+{#                    </div>#}
+                    <!-- Cartes  -->
+                    <div class="col">
+                        <div class="card shadow-sm p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary text-white rounded-circle p-2">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <div class="mx-2">
+                                    <div class=" fw-medium text-secondary small">Dévis</div>
+                                    <h5 class="fw-semibold">15.42M</h5>
+                                </div>
+                            </div>
+                            <div class="text-muted small mt-3">
+                                <span class="text-primary fw-semibold">9.75K</span> le mois encours
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cartes  -->
+                    <div class="col">
+                        <div class="card shadow-sm p-3">
+                            <div class="d-flex justify-contente-center align-items-center">
+                                <div class="bg-secondary text-white rounded-circle p-2">
+                                    <i class="bi bi-receipt-cutoff"></i>
+                                </div>
+                                <div class="mx-2">
+                                    <div class="fw-medium text-secondary small">Factures sans TR</div>
+                                    <h5 class="fw-semibold">10.42M</h5>
+                                </div>
+                            </div>
+                            <div class="text-muted small mt-3">
+                                <span class="text-primary fw-semibold">5.01M</span> le mois encours
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cartes  -->
+                    <div class="col">
+                        <div class="card shadow-sm p-3">
+                            <div class="d-flex justify-contente-center align-items-center">
+                                <div class="bg-secondary text-white rounded-circle p-2">
+                                    <i class="bi bi-receipt-cutoff"></i>
+                                </div>
+                                <div class="mx-2">
+                                    <div class="fw-medium text-secondary small">Factures avec TR</div>
+                                    <h5 class="fw-semibold">5.42M</h5>
+                                </div>
+                            </div>
+                            <div class="text-muted small mt-3">
+                                <span class="text-primary fw-semibold">750K</span> le mois encours
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cartes  -->
+                    <div class="col">
+                        <div class="card shadow-sm p-3">
+                            <div class="d-flex justify-contente-center align-items-center">
+                                <div class="bg-secondary text-white rounded-circle p-2">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                                <div class="mx-2">
+                                    <div class="fw-medium text-secondary small">Clients</div>
+                                    <h5 class="fw-semibold">752</h5>
+                                </div>
+                            </div>
+                            <div class="text-muted small mt-3">
+                                <span class="text-primary fw-semibold">32</span> le mois encours
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- Section Performance -->
             <div class="card p-4 mb-4 mt-5">
                 <div
                     class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
                     <div>
-                        <h2 class="h3 fw-bold mb-1">Votre performance en streaming</h2>
-                        <p class="text-muted small">Streams audio | 7 derniers jours</p>
+                        <h2 class="h3 fw-bold mb-1">Graphe de recettes</h2>
+                        <p class="text-muted small">Données | année 2025</p>
                     </div>
                     <a href="#" class="text-primary fw-semibold small text-decoration-none">VOIR PLUS</a>
                 </div>
@@ -20,49 +107,6 @@
                 </div>
             </div>
 
-            <!-- Section Dernières sorties -->
-            <div>
-                <h3 class="h4 fw-bold mb-3">Les dernières sorties</h3>
-                <div class="row g-4">
-                    <!-- Carte Ajouter une nouvelle sortie -->
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <div
-                            class="card bg-white p-3 h-100 shadow-sm border border-dashed border-primary text-primary d-flex flex-column align-items-center justify-content-center cursor-pointer">
-                            <i class="bi bi-plus-circle-fill fs-4 mb-2"></i>
-                            <span class="fw-semibold text-center small">Créer une nouvelle sortie</span>
-                        </div>
-                    </div>
-                    <!-- Cartes de sorties de remplacement -->
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <div class="card shadow-sm p-3">
-                            <img src="https://placehold.co/300x200/4f46e5/ffffff?text=Album+1"
-                                 class="img-fluid rounded mb-2" alt="Image de l'album">
-                            <p class="text-center fw-medium small mb-0">77.5 K streams</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <div class="card shadow-sm p-3">
-                            <img src="https://placehold.co/300x200/10b981/ffffff?text=Album+2"
-                                 class="img-fluid rounded mb-2" alt="Image de l'album">
-                            <p class="text-center fw-medium small mb-0">2 streams</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <div class="card shadow-sm p-3">
-                            <img src="https://placehold.co/300x200/ef4444/ffffff?text=Album+3"
-                                 class="img-fluid rounded mb-2" alt="Image de l'album">
-                            <p class="text-center fw-medium small mb-0">11.6 K streams</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <div class="card shadow-sm p-3">
-                            <img src="https://placehold.co/300x200/f59e0b/ffffff?text=Album+4"
-                                 class="img-fluid rounded mb-2" alt="Image de l'album">
-                            <p class="text-center fw-medium small mb-0">174 streams</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 {% endblock %}
