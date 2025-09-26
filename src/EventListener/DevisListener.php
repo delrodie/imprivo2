@@ -25,7 +25,7 @@ final class DevisListener
     public function prePersist(Devis $devis, PrePersistEventArgs $args): void
     {
         $user = $this->security->getUser();
-        if ($user) $devis->setCreatedBy($user);
+        if ($user) $devis->setCreatedBy($user->getUserIdentifier());
 
         $devis->setCreatedAt(new \DateTimeImmutable());
     }
@@ -33,7 +33,7 @@ final class DevisListener
     public function preUpdate(Devis $devis, PreUpdateEventArgs $args): void
     {
         $user = $this->security->getUser();
-        if ($user) $devis->setUpdatedBy($user); dump($args->hasChangedField('statut'));
+        if ($user) $devis->setUpdatedBy($user->getUserIdentifier()); //dump($args->hasChangedField('statut'));
 
         $devis->setUpdatedAt(new \DateTimeImmutable());
     }

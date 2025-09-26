@@ -21,7 +21,7 @@ final class RepresentantListener
     public function prePersist(Representant $representant, PrePersistEventArgs $args): void
     {
         $user = $this->security->getUser();
-        if ($user) $representant->setCreatedBy($user);
+        if ($user) $representant->setCreatedBy($user->getUserIdentifier());
 
         $representant->setCreatedAt(new \DateTimeImmutable());
     }
@@ -29,7 +29,7 @@ final class RepresentantListener
     public function preUpdate(Representant $representant, PreUpdateEventArgs $args): void
     {
         $user = $this->security->getUser();
-        if ($user) $representant->setUpdatedBy($user);
+        if ($user) $representant->setUpdatedBy($user->getUserIdentifier());
 
         $representant->setUpdatedAt(new \DateTimeImmutable());
     }
